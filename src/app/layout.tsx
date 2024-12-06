@@ -23,9 +23,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang='en'>
         <body className={`${poppins.className} antialiased`}>
-          <main className='container mx-auto px-4 sm:px-6 lg:px-8'>
-            {children}
-          </main>
+          <main>{children}</main>
         </body>
       </html>
     </ClerkProvider>
