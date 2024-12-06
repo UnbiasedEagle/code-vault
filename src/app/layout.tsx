@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
+import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 
 const poppins = Poppins({
@@ -19,12 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className={`${poppins.className} antialiased`}>
-        <main className='container mx-auto px-4 sm:px-6 lg:px-8'>
-          {children}
-        </main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang='en'>
+        <body className={`${poppins.className} antialiased`}>
+          <main className='container mx-auto px-4 sm:px-6 lg:px-8'>
+            {children}
+          </main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
