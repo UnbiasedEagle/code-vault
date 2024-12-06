@@ -3,7 +3,7 @@ import { Button } from '../ui/button';
 
 const Navbar = () => {
   return (
-    <nav className='flex flex-col sm:flex-row mt-10 sm:mt-0 h-20 items-center justify-between'>
+    <nav className='flex flex-col sm:flex-row mt-10 sm:mt-0 sm:h-20 items-center justify-between'>
       <div className='flex items-center gap-2'>
         <FaCode className='text-primary' size={32} />
         <span className='font-bold text-2xl text-primary'>CodeVault</span>
