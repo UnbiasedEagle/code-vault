@@ -1,6 +1,9 @@
 import { FaCode } from 'react-icons/fa';
 import { QuickLinks } from './quick-links';
 import { Languages } from './languages';
+import { SignOutButton } from '@clerk/nextjs';
+import { LogOut } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export const Sidebar = () => {
   return (
@@ -12,6 +15,20 @@ export const Sidebar = () => {
       <div className='flex-1 flex flex-col gap-6 p-4 overflow-y-auto'>
         <QuickLinks />
         <Languages />
+      </div>
+      <div className='p-3 border-t'>
+        <Button
+          asChild
+          variant='ghost'
+          className='w-full justify-start cursor-pointer'
+        >
+          <SignOutButton>
+            <div className='flex items-center gap-3'>
+              <LogOut size={16} className='mr-1' />
+              Sign out
+            </div>
+          </SignOutButton>
+        </Button>
       </div>
     </div>
   );

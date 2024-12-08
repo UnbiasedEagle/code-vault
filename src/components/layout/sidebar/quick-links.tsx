@@ -1,12 +1,30 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { useQuickLinks } from '@/stores/quick-links';
+import { Trash } from 'lucide-react';
 import Link from 'next/link';
 
-export const QuickLinks = () => {
-  const { links } = useQuickLinks();
+import { AiFillSnippets, AiOutlineHeart } from 'react-icons/ai';
 
+const links = [
+  {
+    icon: AiFillSnippets,
+    label: 'All Codes',
+    href: '/codes',
+  },
+  {
+    icon: AiOutlineHeart,
+    label: 'Favorites',
+    href: '/codes/favorites',
+  },
+  {
+    icon: Trash,
+    label: 'Trash',
+    href: '/codes/trash',
+  },
+];
+
+export const QuickLinks = () => {
   return (
     <div className='space-y-3'>
       <span className='text-xs font-semibold text-muted-foreground px-2 uppercase tracking-wider'>
