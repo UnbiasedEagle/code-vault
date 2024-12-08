@@ -1,14 +1,20 @@
+import Image from 'next/image';
+
 interface UserProfileProps {
   imageUrl: string;
   fullName: string;
   email: string;
 }
 
-export const UserProfile = ({ imageUrl, fullName, email }: UserProfileProps) => {
+export const UserProfile = ({
+  imageUrl,
+  fullName,
+  email,
+}: UserProfileProps) => {
   return (
     <div className='flex items-center space-x-4'>
       <div className='flex-shrink-0'>
-        <img
+        <Image
           height={48}
           width={48}
           className='rounded-full border-2 border-border/50 shadow-sm'
@@ -16,7 +22,7 @@ export const UserProfile = ({ imageUrl, fullName, email }: UserProfileProps) => 
           alt='User Avatar'
         />
       </div>
-      <div className='min-w-0'>
+      <div className='hidden lg:block min-w-0'>
         <h3 className='text-base font-semibold text-foreground truncate'>
           {fullName}
         </h3>
