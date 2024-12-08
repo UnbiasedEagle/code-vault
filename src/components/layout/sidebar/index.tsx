@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 
 export const Sidebar = () => {
   return (
-    <div className='w-80 flex flex-col h-screen border-r bg-white/50 backdrop-blur-sm'>
-      <div className='flex items-center gap-2 px-6 h-16 border-b'>
+    <aside className='w-80 flex border-r border-border flex-col h-screen bg-card'>
+      <div className='flex items-center gap-2 px-6 h-16 border-b border-border'>
         <FaCode className='text-primary' size={24} />
         <span className='font-bold text-xl text-primary'>CodeVault</span>
       </div>
@@ -16,20 +16,20 @@ export const Sidebar = () => {
         <QuickLinks />
         <Languages />
       </div>
-      <div className='p-3 border-t'>
+      <div className='p-3 border-t border-border'>
         <Button
           asChild
           variant='ghost'
-          className='w-full justify-start cursor-pointer'
+          className='w-full justify-start text-muted-foreground hover:text-foreground'
         >
           <SignOutButton>
             <div className='flex items-center gap-3'>
-              <LogOut size={16} className='mr-1' />
+              <LogOut size={16} />
               Sign out
             </div>
           </SignOutButton>
         </Button>
       </div>
-    </div>
+    </aside>
   );
 };

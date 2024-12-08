@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Search, Plus } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
+import { ThemeSwitch } from '@/components/ui/theme-switch';
 
 interface TopBarProps {
   imageUrl: string;
@@ -17,7 +18,7 @@ export const TopBar = ({ imageUrl, fullName, email }: TopBarProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <Card className='border-none shadow-none bg-background'>
+    <Card>
       <CardContent className='p-4'>
         <div className='flex items-center justify-between gap-6'>
           <div className='flex items-center space-x-4'>
@@ -37,7 +38,7 @@ export const TopBar = ({ imageUrl, fullName, email }: TopBarProps) => {
               <p className='text-xs text-muted-foreground/80 mt-0.5'>{email}</p>
             </div>
           </div>
-          <div className='flex items-center gap-2.5 flex-1 max-w-xl'>
+          <div className='flex items-center gap-2.5 flex-1 max-w-4xl'>
             <div className='relative flex-1'>
               <div className='absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none'>
                 <Search className='h-4 w-4 text-muted-foreground' />
@@ -57,6 +58,9 @@ export const TopBar = ({ imageUrl, fullName, email }: TopBarProps) => {
               <Plus className='h-4 w-4' />
               Code
             </Button>
+          </div>
+          <div>
+            <ThemeSwitch />
           </div>
         </div>
       </CardContent>
