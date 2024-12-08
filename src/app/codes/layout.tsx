@@ -1,4 +1,4 @@
-import { Sidebar } from '@/components/layout/sidebar/index';
+import { Sidebar } from '@/components/layout/sidebar';
 import { PropsWithChildren } from 'react';
 
 const CodesLayout = ({ children }: PropsWithChildren) => {
