@@ -38,7 +38,7 @@ console.log('The result is:', result);
 `;
 
   return (
-    <li className='flex-1 min-w-[320px]'>
+    <li>
       <Card>
         <CodeItemHeader
           title='Lorem ipsum dolor sit amet consectetur.'

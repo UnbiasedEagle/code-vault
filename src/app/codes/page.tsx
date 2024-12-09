@@ -11,7 +11,7 @@ const CodesPage = async () => {
   }
 
   return (
-    <div className='flex flex-col gap-5'>
+    <div className='h-full overflow-auto scrollbar-hide flex flex-col gap-5'>
       <TopBar
         imageUrl={user.imageUrl}
         fullName={user.firstName + ' ' + user.lastName}
