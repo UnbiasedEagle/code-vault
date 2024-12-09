@@ -23,10 +23,10 @@ export const TagsSwiper = () => {
                 dragFree: true,
               }}
               style={{
-                width: 'calc(100% - 80px)',
+                width: 'calc(100% - 16px)',
               }}
             >
-              <CarouselContent className='flex space-x-4 text-neutral-400 font-medium'>
+              <CarouselContent className='flex text-neutral-400 font-medium'>
                 <CarouselItem>
                   <Button>All</Button>
                 </CarouselItem>
