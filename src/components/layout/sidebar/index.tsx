@@ -5,7 +5,7 @@ import { QuickLinks } from './quick-links';
 
 export const Sidebar = () => {
   return (
-    <aside className='hidden md:flex w-80 border-r border-border flex-col h-screen bg-card'>
+    <aside className='hidden lg:flex w-80 border-r border-border flex-col min-h-screen bg-card'>
       <Logo />
       <div className='flex-1 flex flex-col gap-6 p-4 overflow-y-auto'>
         <QuickLinks />

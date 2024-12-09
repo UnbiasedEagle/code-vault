@@ -1,7 +1,7 @@
 import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import { ContentArea } from './components/content-area';
 import { TopBar } from './components/topbar';
-import { TagsSwiper } from './components/tags-swiper';
 
 const CodesPage = async () => {
   const user = await currentUser();
@@ -17,7 +17,7 @@ const CodesPage = async () => {
         fullName={user.firstName + ' ' + user.lastName}
         email={user.emailAddresses[0].emailAddress}
       />
-      <TagsSwiper />
+      <ContentArea showCode={false} />
     </div>
   );
 };
