@@ -9,7 +9,7 @@ const HomePage = () => {
           Organize Your Code Snippets{' '}
           <span className='text-primary'>Efficiently!</span>
         </h1>
-        <p className='text-center max-w-2xl text-neutral-600'>
+        <p className='text-center max-w-2xl text-neutral-600 dark:text-neutral-400'>
           With our advanced tagging and search features, you can quickly find
           the snippets you need, right when you need it. Spend less time
           searching for code and more time writing it.
