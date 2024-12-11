@@ -1,12 +1,12 @@
-import { ICodeItem } from '@/types';
+import { Code } from '@prisma/client';
 import { create } from 'zustand';
 
 interface EditCodeState {
-  selectedCode: ICodeItem | null;
-  setSelectedCode: (selectedCode: ICodeItem | null) => void;
+  selectedCode: Code | null;
+  setSelectedCode: (selectedCode: Code | null) => void;
 }
 
 export const useEditCode = create<EditCodeState>((set) => ({
   selectedCode: null,
-  setSelectedCode: (selectedCode: ICodeItem | null) => set({ selectedCode }),
+  setSelectedCode: (selectedCode: Code | null) => set({ selectedCode }),
 }));

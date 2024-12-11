@@ -2,24 +2,26 @@ import { Card } from '../ui/card';
 import { CodeItemHeader } from './header';
 import { CodeItemContent } from './content';
 import { CodeItemFooter } from './footer';
-import { ICodeItem } from '@/types';
+import { Code } from '@prisma/client';
 
 interface CodeItemProps {
-  code: ICodeItem;
+  codeItem: Code;
   showCode: boolean;
 }
 
-export const CodeItem = ({ showCode, code }: CodeItemProps) => {
+export const CodeItem = ({ showCode, codeItem }: CodeItemProps) => {
+  const { language, description, code, tags } = codeItem;
   return (
     <li>
       <Card>
-        <CodeItemHeader code={code} />
+        <CodeItemHeader code={codeItem} />
         <CodeItemContent
+          description={description}
           showCode={showCode}
-          badges={code.tags}
-          codeString={code.codeString}
+          badges={tags}
+          codeString={code}
         />
-        <CodeItemFooter language={code.language} />
+        <CodeItemFooter language={language} />
       </Card>
     </li>
   );

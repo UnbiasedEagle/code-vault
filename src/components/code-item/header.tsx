@@ -4,10 +4,10 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { Button } from '../ui/button';
 import { CardHeader } from '../ui/card';
 import { useEditCode } from '@/stores/use-edit-code';
-import { ICodeItem } from '@/types';
+import { Code } from '@prisma/client';
 
 interface CodeItemHeaderProps {
-  code: ICodeItem;
+  code: Code;
 }
 
 export const CodeItemHeader = ({ code }: CodeItemHeaderProps) => {
@@ -24,7 +24,7 @@ export const CodeItemHeader = ({ code }: CodeItemHeaderProps) => {
           {code.title}
         </Button>
         <span className='cursor-pointer hover:text-red-500 transition-colors duration-300'>
-          {code.isLiked ? (
+          {code.favorited ? (
             <FaHeart size={20} className='text-red-500' />
           ) : (
             <FaRegHeart
@@ -36,7 +36,7 @@ export const CodeItemHeader = ({ code }: CodeItemHeaderProps) => {
       </div>
       <div>
         <span className='text-neutral-400 font-medium text-sm'>
-          {code.date.toDateString()}
+          {code.updatedAt.toDateString()}
         </span>
       </div>
     </CardHeader>

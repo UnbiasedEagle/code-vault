@@ -11,12 +11,14 @@ interface CodeItemContentProps {
   showCode: boolean;
   badges: string[];
   codeString: string;
+  description: string;
 }
 
 export const CodeItemContent = ({
   showCode,
   badges,
   codeString,
+  description,
 }: CodeItemContentProps) => {
   const { theme } = useTheme();
 
@@ -33,12 +35,7 @@ export const CodeItemContent = ({
           </li>
         ))}
       </ul>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quod,
-        voluptatem, quibusdam, doloribus dolores quae voluptatum voluptatibus
-        quia quos dolorum quas. Quisquam, voluptatem
-      </p>
-
+      <p>{description}</p>
       <SyntaxHighlighter
         language='javascript'
         style={theme === 'dark' ? monokai : docco}
