@@ -1,11 +1,12 @@
+import { ICodeItem } from '@/types';
 import { create } from 'zustand';
 
 interface EditCodeState {
-  showEditCode: boolean;
-  setShowEditCode: (showEditCode: boolean) => void;
+  selectedCode: ICodeItem | null;
+  setSelectedCode: (selectedCode: ICodeItem | null) => void;
 }
 
 export const useEditCode = create<EditCodeState>((set) => ({
-  showEditCode: false,
-  setShowEditCode: (showEditCode: boolean) => set({ showEditCode }),
+  selectedCode: null,
+  setSelectedCode: (selectedCode: ICodeItem | null) => set({ selectedCode }),
 }));
