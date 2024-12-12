@@ -10,16 +10,18 @@ import { useShowCode } from '@/stores/use-show-code';
 import { CodeItem } from '@/components/code-item';
 
 export const ContentArea = () => {
-  const showCompleteCode = useShowCode();
-  const showEditCode = useEditCode((state) => state.selectedCode !== null);
-  const showNewCode = useCreateCode((state) => state.showNewCode);
+  const completeCode = useShowCode();
+  const editCode = useEditCode();
+  const createCode = useCreateCode();
 
   return (
     <div className='flex gap-4'>
       <div
         className={cn(
           'flex flex-col gap-5',
-          showEditCode || showNewCode || showCompleteCode.selectedCode
+          createCode.showNewCode ||
+            editCode.selectedCode ||
+            completeCode.selectedCode
             ? 'w-full md:w-1/2'
             : 'w-full'
         )}
@@ -27,14 +29,29 @@ export const ContentArea = () => {
         <TagsSwiper />
         <CodeList showCode={false} />
       </div>
-      {showCompleteCode.selectedCode !== null ? (
+      {completeCode.selectedCode !== null ? (
         <div className='fixed md:static left-0 right-0 w-[95%] md:w-full mx-auto'>
-          <CodeItem codeItem={showCompleteCode.selectedCode} showCode={true} />
+          <div
+            onClick={() => completeCode.setSelectedCode(null)}
+            className='fixed inset-0 bg-black/90 md:hidden'
+          ></div>
+          <div className='relative z-1 md:z-0'>
+            <CodeItem codeItem={completeCode.selectedCode} showCode={true} />
+          </div>
         </div>
       ) : (
-        (showEditCode || showNewCode) && (
+        (editCode.selectedCode || createCode.showNewCode) && (
           <div className='fixed md:static left-0 right-0 w-[95%] md:w-full mx-auto'>
-            <CodeForm />
+            <div
+              onClick={() => {
+                editCode.setSelectedCode(null);
+                createCode.setShowNewCode(false);
+              }}
+              className='fixed inset-0 bg-black/90 md:hidden'
+            ></div>
+            <div className='relative z-1 md:z-0'>
+              <CodeForm />
+            </div>
           </div>
         )
       )}

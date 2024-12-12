@@ -37,6 +37,7 @@ export const CodeItemContent = ({
       </ul>
       <p>{description}</p>
       <SyntaxHighlighter
+        wrapLongLines
         language='javascript'
         style={theme === 'dark' ? monokai : docco}
       >

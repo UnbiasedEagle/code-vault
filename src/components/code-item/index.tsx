@@ -13,7 +13,7 @@ export const CodeItem = ({ showCode, codeItem }: CodeItemProps) => {
   const { description, code, tags } = codeItem;
   return (
     <Card>
-      <CodeItemHeader code={codeItem} />
+      <CodeItemHeader showCode={showCode} code={codeItem} />
       <CodeItemContent
         description={description}
         showCode={showCode}
