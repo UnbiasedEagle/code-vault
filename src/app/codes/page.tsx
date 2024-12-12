@@ -17,7 +17,7 @@ const CodesPage = async () => {
         fullName={user.firstName + ' ' + user.lastName}
         email={user.emailAddresses[0].emailAddress}
       />
-      <ContentArea showCode={false} />
+      <ContentArea />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { Card, CardContent } from './ui/card';
 import { useEffect, useState } from 'react';
 import { Code } from '@prisma/client';
 
-export const CodeSection = () => {
+export const CodeForm = () => {
   const selectedCode = useEditCode((state) => state.selectedCode);
 
   const [code, setCode] = useState<Code | null>(null);

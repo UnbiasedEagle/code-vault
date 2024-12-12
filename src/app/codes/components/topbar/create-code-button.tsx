@@ -3,9 +3,11 @@
 import { Button } from '@/components/ui/button';
 import { useCreateCode } from '@/stores/use-create-code';
 import { useEditCode } from '@/stores/use-edit-code';
+import { useShowCode } from '@/stores/use-show-code';
 import { Plus } from 'lucide-react';
 
 export const CreateCodeButton = () => {
+  const setShowCompleteCode = useShowCode((state) => state.setSelectedCode);
   const setSelectedCode = useEditCode((state) => state.setSelectedCode);
   const setShowNewCode = useCreateCode((state) => state.setShowNewCode);
 
@@ -13,6 +15,7 @@ export const CreateCodeButton = () => {
     <Button
       onClick={() => {
         setSelectedCode(null);
+        setShowCompleteCode(null);
         setShowNewCode(true);
       }}
       variant='default'

@@ -3,15 +3,15 @@
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { Button } from '../ui/button';
 import { CardHeader } from '../ui/card';
-import { useEditCode } from '@/stores/use-edit-code';
 import { Code } from '@prisma/client';
+import { useShowCode } from '@/stores/use-show-code';
 
 interface CodeItemHeaderProps {
   code: Code;
 }
 
 export const CodeItemHeader = ({ code }: CodeItemHeaderProps) => {
-  const setSelectedCode = useEditCode((state) => state.setSelectedCode);
+  const setSelectedCode = useShowCode((state) => state.setSelectedCode);
 
   return (
     <CardHeader className='p-4 flex flex-col gap-2'>

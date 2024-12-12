@@ -10,19 +10,17 @@ interface CodeItemProps {
 }
 
 export const CodeItem = ({ showCode, codeItem }: CodeItemProps) => {
-  const { language, description, code, tags } = codeItem;
+  const { description, code, tags } = codeItem;
   return (
-    <li>
-      <Card>
-        <CodeItemHeader code={codeItem} />
-        <CodeItemContent
-          description={description}
-          showCode={showCode}
-          badges={tags}
-          codeString={code}
-        />
-        <CodeItemFooter language={language} />
-      </Card>
-    </li>
+    <Card>
+      <CodeItemHeader code={codeItem} />
+      <CodeItemContent
+        description={description}
+        showCode={showCode}
+        badges={tags}
+        codeString={code}
+      />
+      <CodeItemFooter code={codeItem} />
+    </Card>
   );
 };

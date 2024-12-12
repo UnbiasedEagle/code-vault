@@ -65,7 +65,9 @@ export const CodeList = ({ showCode = true }: CodeListProps) => {
   return (
     <ul className='grid grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))] gap-4'>
       {codeItems.map((codeItem) => (
-        <CodeItem key={codeItem.id} codeItem={codeItem} showCode={showCode} />
+        <li key={codeItem.id}>
+          <CodeItem key={codeItem.id} codeItem={codeItem} showCode={showCode} />
+        </li>
       ))}
     </ul>
   );
