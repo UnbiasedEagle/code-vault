@@ -23,7 +23,12 @@ export const CodeItemHeader = ({ code, showCode }: CodeItemHeaderProps) => {
   return (
     <CardHeader className='p-4 flex flex-col gap-2'>
       <div className='flex items-center justify-between gap-5'>
-        <div className='flex justify-start items-center gap-3'>
+        <div
+          className={cn(
+            'flex justify-between items-center gap-3',
+            showCode && 'justify-start'
+          )}
+        >
           <Button
             onClick={() => setSelectedCode(code)}
             variant='link'
@@ -31,7 +36,10 @@ export const CodeItemHeader = ({ code, showCode }: CodeItemHeaderProps) => {
           >
             {code.title}
           </Button>
-          <span className='cursor-pointer  hover:text-red-500 transition-colors duration-300'>
+          <span
+            role='button'
+            className='cursor-pointer  hover:text-red-500 transition-colors duration-300'
+          >
             {code.favorited ? (
               <FaHeart size={20} className='text-red-500' />
             ) : (

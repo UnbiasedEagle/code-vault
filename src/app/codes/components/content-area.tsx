@@ -30,29 +30,30 @@ export const ContentArea = () => {
         <CodeList showCode={false} />
       </div>
       {completeCode.selectedCode !== null ? (
-        <div className='fixed md:static left-0 right-0 w-[95%] md:w-full mx-auto'>
-          <div
-            onClick={() => completeCode.setSelectedCode(null)}
-            className='fixed inset-0 bg-black/90 md:hidden'
-          ></div>
-          <div className='relative z-1 md:z-0'>
-            <CodeItem codeItem={completeCode.selectedCode} showCode={true} />
-          </div>
-        </div>
-      ) : (
-        (editCode.selectedCode || createCode.showNewCode) && (
-          <div className='fixed md:static left-0 right-0 w-[95%] md:w-full mx-auto'>
+        <>
+          <div className='fixed inset-0 md:static md:w-full'>
             <div
-              onClick={() => {
-                editCode.setSelectedCode(null);
-                createCode.setShowNewCode(false);
-              }}
-              className='fixed inset-0 bg-black/90 md:hidden'
+              onClick={() => completeCode.setSelectedCode(null)}
+              className='absolute inset-0 bg-black/90 md:hidden'
             ></div>
-            <div className='relative z-1 md:z-0'>
-              <CodeForm />
+            <div className='absolute w-[90%] left-1/2 -translate-x-1/2 md:w-full top-1/2 -translate-y-1/2 md:z-0 md:static md:top-0 md:left-0 md:translate-x-0 md:translate-y-0'>
+              <CodeItem codeItem={completeCode.selectedCode} showCode={true} />
             </div>
           </div>
+        </>
+      ) : (
+        (editCode.selectedCode || createCode.showNewCode) && (
+          <>
+            <div className='fixed inset-0 md:static md:w-full'>
+              <div
+                onClick={() => completeCode.setSelectedCode(null)}
+                className='absolute inset-0 bg-black/90 md:hidden'
+              ></div>
+              <div className='absolute w-[90%] left-1/2 -translate-x-1/2 md:w-full top-1/2 -translate-y-1/2 md:z-0 md:static md:top-0 md:left-0 md:translate-x-0 md:translate-y-0'>
+                <CodeForm />
+              </div>
+            </div>
+          </>
         )
       )}
     </div>

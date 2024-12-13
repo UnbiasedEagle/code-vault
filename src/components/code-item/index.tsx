@@ -12,7 +12,7 @@ interface CodeItemProps {
 export const CodeItem = ({ showCode, codeItem }: CodeItemProps) => {
   const { description, code, tags } = codeItem;
   return (
-    <Card>
+    <Card className='max-h-[700px] overflow-y-auto'>
       <CodeItemHeader showCode={showCode} code={codeItem} />
       <CodeItemContent
         description={description}
