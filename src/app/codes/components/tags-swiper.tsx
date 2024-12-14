@@ -5,7 +5,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
-import { Plus } from 'lucide-react';
+import { CreateTagBtn } from './create-tag-btn';
 
 export const TagsSwiper = () => {
   return (
@@ -73,10 +73,7 @@ export const TagsSwiper = () => {
             </Carousel>
           </div>
           <div className='ml-auto'>
-            <Button className='flex items-center gap-1'>
-              <Plus className='h-5 w-5' />
-              Tag
-            </Button>
+            <CreateTagBtn />
           </div>
         </div>
       </CardContent>

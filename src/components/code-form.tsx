@@ -2,10 +2,8 @@
 
 import { useEditCode } from '@/stores/use-edit-code';
 import { Card, CardContent } from './ui/card';
-import { useEffect, useState } from 'react';
-import { Code } from '@prisma/client';
+import { useEffect } from 'react';
 import { FaHashtag } from 'react-icons/fa';
-import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { FaFileAlt } from 'react-icons/fa';
 import { Textarea } from './ui/textarea';
@@ -16,6 +14,18 @@ import { Button } from './ui/button';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useCreateCode } from '@/stores/use-create-code';
 import { useShowCode } from '@/stores/use-show-code';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './ui/form';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CodeFormSchema } from '@/schemas/code-form';
+import { z } from 'zod';
 
 const frameworksList = [
   { value: 'react', label: 'React', icon: Turtle },
@@ -25,20 +35,47 @@ const frameworksList = [
   { value: 'ember', label: 'Ember', icon: Fish },
 ];
 
+type CodeForm = z.infer<typeof CodeFormSchema>;
+
 export const CodeForm = () => {
   const editCode = useEditCode();
-  const setShowNewCode = useCreateCode((state) => state.setShowNewCode);
+  const showNewCode = useCreateCode();
   const setSelectedCode = useShowCode((state) => state.setSelectedCode);
 
-  const [code, setCode] = useState<Code | null>(null);
+  const form = useForm<CodeForm>({
+    resolver: zodResolver(CodeFormSchema),
+    defaultValues: {
+      title: '',
+      tags: [],
+      description: '',
+      language: '',
+      code: '',
+    },
+  });
 
   useEffect(() => {
     if (editCode.selectedCode) {
-      setCode(editCode.selectedCode);
+      form.reset({
+        title: editCode.selectedCode.title,
+        tags: editCode.selectedCode.tags,
+        description: editCode.selectedCode.description,
+        language: editCode.selectedCode.language,
+        code: editCode.selectedCode.code,
+      });
     } else {
-      setCode(null);
+      form.reset({
+        title: '',
+        tags: [],
+        description: '',
+        language: '',
+        code: '',
+      });
     }
-  }, [editCode.selectedCode]);
+  }, [editCode.selectedCode, showNewCode.showNewCode, form]);
+
+  const onSubmit = (data: CodeForm) => {
+    console.log(data);
+  };
 
   return (
     <Card className='h-[660px] overflow-y-auto'>
@@ -48,41 +85,69 @@ export const CodeForm = () => {
             onClick={() => {
               setSelectedCode(null);
               editCode.setSelectedCode(null);
-              setShowNewCode(false);
+              showNewCode.setShowNewCode(false);
             }}
             variant='ghost'
           >
             <AiOutlineClose />
           </Button>
         </div>
-        <form className='flex flex-col space-y-8'>
-          <div className='flex items-center gap-2'>
-            <Label htmlFor='title'>
-              <FaHashtag size={16} />
-            </Label>
-            <Input
-              placeholder='New Title...'
-              autoFocus
-              className='placeholder:font-bold font-bold'
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+            <FormField
+              control={form.control}
+              name='title'
+              render={({ field }) => (
+                <FormItem className='flex items-center space-x-2'>
+                  <FormLabel htmlFor='title'>
+                    <FaHashtag size={16} className='mt-1' />
+                  </FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder='New Title...' autoFocus />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className='flex items-start gap-2'>
-            <Label htmlFor='tags'>
-              <IoMdPricetags className='mt-1' size={16} />
-            </Label>
-            <MultiSelect
-              placeholder='Select Tags...'
-              options={frameworksList}
-              onValueChange={() => {}}
+            <FormField
+              control={form.control}
+              name='tags'
+              render={({ field }) => (
+                <FormItem className='flex items-center space-x-2'>
+                  <FormLabel htmlFor='tags'>
+                    <IoMdPricetags className='mt-1' size={16} />
+                  </FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      placeholder='Select Tags...'
+                      options={frameworksList}
+                      onValueChange={() => {}}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className='flex items-start gap-2'>
-            <Label htmlFor='description'>
-              <FaFileAlt className='mt-1' size={16} />
-            </Label>
-            <Textarea placeholder='New Description...' />
-          </div>
-        </form>
+            <FormField
+              control={form.control}
+              name='description'
+              render={({ field }) => (
+                <FormItem className='flex items-start space-x-2'>
+                  <FormLabel htmlFor='description'>
+                    <FaFileAlt className='mt-3' size={16} />
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea {...field} placeholder='New Description...' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className='flex justify-end'>
+              <Button type='submit'>Save</Button>
+            </div>
+          </form>
+        </Form>
       </CardContent>
     </Card>
   );
