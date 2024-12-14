@@ -20,6 +20,15 @@ const CodesPage = async () => {
     },
   });
 
+  const codes = await prisma.code.findMany({
+    where: {
+      userId: user.id,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
   return (
     <div className='h-full overflow-auto scrollbar-hide flex flex-col gap-5'>
       <TopBar
@@ -27,7 +36,7 @@ const CodesPage = async () => {
         fullName={user.firstName + ' ' + user.lastName}
         email={user.emailAddresses[0].emailAddress}
       />
-      <ContentArea tags={tags} />
+      <ContentArea codeItems={codes} tags={tags} />
     </div>
   );
 };

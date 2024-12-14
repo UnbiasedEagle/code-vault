@@ -78,8 +78,6 @@ export const CodeForm = ({ tags }: CodeFormProps) => {
     console.log(data);
   };
 
-  console.log(form.getValues('code'));
-
   return (
     <Card className='h-[660px] overflow-y-auto'>
       <CardContent className='p-4'>
@@ -138,10 +136,12 @@ export const CodeForm = ({ tags }: CodeFormProps) => {
                       placeholder='Select Tags...'
                       options={tags.map((tag) => ({
                         label: tag.name,
-                        value: tag.name,
+                        value: tag.id,
                       }))}
                       maxCount={3}
-                      onValueChange={() => {}}
+                      onValueChange={(values) => {
+                        form.setValue('tags', values);
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
