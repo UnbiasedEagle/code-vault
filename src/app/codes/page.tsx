@@ -2,6 +2,7 @@ import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { ContentArea } from './components/content-area';
 import { TopBar } from './components/topbar';
+import prisma from '@/lib/db';
 
 const CodesPage = async () => {
   const user = await currentUser();
@@ -10,6 +11,15 @@ const CodesPage = async () => {
     return redirect('/sign-in');
   }
 
+  const tags = await prisma.tag.findMany({
+    where: {
+      userId: user.id,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
   return (
     <div className='h-full overflow-auto scrollbar-hide flex flex-col gap-5'>
       <TopBar
@@ -17,7 +27,7 @@ const CodesPage = async () => {
         fullName={user.firstName + ' ' + user.lastName}
         email={user.emailAddresses[0].emailAddress}
       />
-      <ContentArea />
+      <ContentArea tags={tags} />
     </div>
   );
 };

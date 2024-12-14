@@ -9,7 +9,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import {
   Form,
@@ -97,7 +96,7 @@ export const CreateTagBtn = () => {
                 Cancel
               </Button>
               <Button disabled={isPending} type='submit'>
-                Create Tag
+                Create
               </Button>
             </DialogFooter>
           </form>

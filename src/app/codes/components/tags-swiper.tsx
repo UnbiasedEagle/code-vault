@@ -6,8 +6,13 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel';
 import { CreateTagBtn } from './create-tag-btn';
+import { Tag } from '@prisma/client';
 
-export const TagsSwiper = () => {
+interface TagsSwiperProps {
+  tags: Tag[];
+}
+
+export const TagsSwiper = ({ tags }: TagsSwiperProps) => {
   return (
     <Card>
       <CardContent className='p-4'>
@@ -30,45 +35,11 @@ export const TagsSwiper = () => {
                 <CarouselItem>
                   <Button>All</Button>
                 </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>JavaScript</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>React</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>Node.js</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>Python</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>TypeScript</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>Vue.js</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>Angular</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>Django</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>Flask</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>Ruby on Rails</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>Spring</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>Laravel</Button>
-                </CarouselItem>
-                <CarouselItem>
-                  <Button variant='ghost'>Express</Button>
-                </CarouselItem>
+                {tags.map((tag) => (
+                  <CarouselItem key={tag.id}>
+                    <Button variant='ghost'>{tag.name}</Button>
+                  </CarouselItem>
+                ))}
               </CarouselContent>
             </Carousel>
           </div>
