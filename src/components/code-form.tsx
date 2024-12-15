@@ -2,7 +2,7 @@
 
 import { useEditCode } from '@/stores/use-edit-code';
 import { Card, CardContent } from './ui/card';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FaCode, FaHashtag } from 'react-icons/fa';
 import { Input } from './ui/input';
 import { FaFileAlt } from 'react-icons/fa';
@@ -25,7 +25,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CodeFormSchema } from '@/schemas/code-form';
 import { z } from 'zod';
-import { Tag } from '@prisma/client';
 import Editor from '@monaco-editor/react';
 import {
   Select,
@@ -34,14 +33,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
+import { SimpleTag } from '@/types';
+import { createCode } from '@/actions/create-code';
+import { toast } from 'sonner';
+import { Languages } from '@/lib/utils';
 
 type CodeForm = z.infer<typeof CodeFormSchema>;
 
 interface CodeFormProps {
-  tags: Tag[];
+  tags: SimpleTag[];
 }
 
 export const CodeForm = ({ tags }: CodeFormProps) => {
+  const [pending, setPending] = useState(false);
+
   const editCode = useEditCode();
   const showNewCode = useCreateCode();
   const setSelectedCode = useShowCode((state) => state.setSelectedCode);
@@ -53,6 +58,7 @@ export const CodeForm = ({ tags }: CodeFormProps) => {
       description: '',
       language: '',
       code: '',
+      tags: [],
     },
   });
 
@@ -63,6 +69,7 @@ export const CodeForm = ({ tags }: CodeFormProps) => {
         description: editCode.selectedCode.description,
         language: editCode.selectedCode.language,
         code: editCode.selectedCode.code,
+        tags: editCode.selectedCode.tags.map((tag) => tag.id),
       });
     } else {
       form.reset({
@@ -70,12 +77,45 @@ export const CodeForm = ({ tags }: CodeFormProps) => {
         description: '',
         language: '',
         code: '',
+        tags: [],
       });
     }
   }, [editCode.selectedCode, showNewCode.showNewCode, form]);
 
-  const onSubmit = (data: CodeForm) => {
-    console.log(data);
+  const onSubmit = async (data: CodeForm) => {
+    try {
+      setPending(true);
+      const formData = new FormData();
+      formData.append('title', data.title);
+      formData.append('description', data.description);
+      formData.append('code', data.code);
+      formData.append('language', data.language);
+      formData.append('tags', JSON.stringify(data.tags));
+      if (editCode.selectedCode) {
+        // const result = await updateCode(editCode.selectedCode.id, formData);
+        // if (result.success) {
+        //   toast.success(result.message);
+        //   setSelectedCode(null);
+        //   editCode.setSelectedCode(null);
+        // } else {
+        //   toast.error(result.error);
+        // }
+      } else {
+        const result = await createCode(null, formData);
+        if (result.success) {
+          toast.success(result.message);
+          setSelectedCode(null);
+          editCode.setSelectedCode(null);
+          showNewCode.setShowNewCode(false);
+        } else {
+          toast.error(result.error);
+        }
+      }
+    } catch {
+      toast.error('Something went wrong');
+    } finally {
+      setPending(false);
+    }
   };
 
   return (
@@ -180,12 +220,11 @@ export const CodeForm = ({ tags }: CodeFormProps) => {
                         <SelectValue placeholder='Select Language...' />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value='javascript'>JavaScript</SelectItem>
-                        <SelectItem value='typescript'>TypeScript</SelectItem>
-                        <SelectItem value='python'>Python</SelectItem>
-                        <SelectItem value='java'>Java</SelectItem>
-                        <SelectItem value='c'>C</SelectItem>
-                        <SelectItem value='csharp'>C#</SelectItem>
+                        {Languages.map((lang) => (
+                          <SelectItem key={lang.label} value={lang.label}>
+                            {lang.name}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -220,7 +259,9 @@ export const CodeForm = ({ tags }: CodeFormProps) => {
               )}
             />
             <div className='flex justify-end'>
-              <Button type='submit'>Save</Button>
+              <Button disabled={pending} type='submit'>
+                {editCode.selectedCode ? 'Update' : 'Save'}
+              </Button>
             </div>
           </form>
         </Form>

@@ -6,10 +6,11 @@ import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 import { Badge } from '../ui/badge';
 import { CardContent } from '../ui/card';
+import { SimpleTag } from '@/types';
 
 interface CodeItemContentProps {
   showCode: boolean;
-  badges: string[];
+  badges: SimpleTag[];
   codeString: string;
   description: string;
 }
@@ -31,7 +32,7 @@ export const CodeItemContent = ({
       <ul className='flex gap-2 overflow-hidden overflow-x-auto scrollbar-hide'>
         {badges.map((badge, index) => (
           <li key={index}>
-            <Badge variant='secondary'>{badge}</Badge>
+            <Badge variant='secondary'>{badge.name}</Badge>
           </li>
         ))}
       </ul>

@@ -1,12 +1,12 @@
-import { Code } from '@prisma/client';
+import { CodeWithTags } from '@/types';
 import { create } from 'zustand';
 
 interface ShowCodeState {
-  selectedCode: Code | null;
-  setSelectedCode: (code: Code | null) => void;
+  selectedCode: CodeWithTags | null;
+  setSelectedCode: (code: CodeWithTags | null) => void;
 }
 
 export const useShowCode = create<ShowCodeState>((set) => ({
   selectedCode: null,
-  setSelectedCode: (code: Code | null) => set({ selectedCode: code }),
+  setSelectedCode: (code: CodeWithTags | null) => set({ selectedCode: code }),
 }));

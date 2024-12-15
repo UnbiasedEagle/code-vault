@@ -5,11 +5,11 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
+import { SimpleTag } from '@/types';
 import { CreateTagBtn } from './create-tag-btn';
-import { Tag } from '@prisma/client';
 
 interface TagsSwiperProps {
-  tags: Tag[];
+  tags: SimpleTag[];
 }
 
 export const TagsSwiper = ({ tags }: TagsSwiperProps) => {

@@ -2,10 +2,10 @@ import { Card } from '../ui/card';
 import { CodeItemHeader } from './header';
 import { CodeItemContent } from './content';
 import { CodeItemFooter } from './footer';
-import { Code } from '@prisma/client';
+import { CodeWithTags } from '@/types';
 
 interface CodeItemProps {
-  codeItem: Code;
+  codeItem: CodeWithTags;
   showCode: boolean;
 }
 

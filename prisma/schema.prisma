@@ -20,7 +20,7 @@ model Code {
   description String
   code        String
   language    String
-  favorited   Boolean
+  favorited   Boolean @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   tags        Tag[] 

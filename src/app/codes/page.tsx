@@ -15,6 +15,10 @@ const CodesPage = async () => {
     where: {
       userId: user.id,
     },
+    select: {
+      id: true,
+      name: true,
+    },
     orderBy: {
       createdAt: 'desc',
     },
@@ -24,13 +28,21 @@ const CodesPage = async () => {
     where: {
       userId: user.id,
     },
+    include: {
+      tags: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
     orderBy: {
       createdAt: 'desc',
     },
   });
 
   return (
-    <div className='h-full overflow-auto scrollbar-hide flex flex-col gap-5'>
+    <div className='h-full overflow-auto flex flex-col gap-5'>
       <TopBar
         imageUrl={user.imageUrl}
         fullName={user.firstName + ' ' + user.lastName}

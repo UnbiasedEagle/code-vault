@@ -1,29 +1,22 @@
 import { Edit, Trash } from 'lucide-react';
 import { Button } from '../ui/button';
 import { CardFooter } from '../ui/card';
-import { SiJavascript, SiTypescript } from 'react-icons/si';
-import { languages } from '@/lib/utils';
-import { IconType } from 'react-icons/lib';
-import { Code } from '@prisma/client';
 import { useEditCode } from '@/stores/use-edit-code';
 import { useShowCode } from '@/stores/use-show-code';
-
-type Languages = (typeof languages)[number];
-
-const languageMap: Record<Languages, IconType> = {
-  JavaScript: SiJavascript,
-  TypeScript: SiTypescript,
-};
+import { CodeWithTags } from '@/types';
+import { Languages } from '@/lib/utils';
+import { IconType } from 'react-icons/lib';
 
 interface CodeItemFooterProps {
-  code: Code;
+  code: CodeWithTags;
 }
 
 export const CodeItemFooter = ({ code }: CodeItemFooterProps) => {
   const setShowCompleteCode = useShowCode((state) => state.setSelectedCode);
   const setSelectedCode = useEditCode((state) => state.setSelectedCode);
 
-  const LanguageIcon = languageMap[code.language];
+  const language = Languages.find((lang) => lang.label === code.language);
+  const LanguageIcon = language?.icon as IconType;
 
   return (
     <CardFooter className='flex border-t px-4 py-2 items-center justify-between'>
@@ -31,7 +24,7 @@ export const CodeItemFooter = ({ code }: CodeItemFooterProps) => {
         <span>
           <LanguageIcon className='text-base' />
         </span>
-        <span className='text-sm'>{code.language}</span>
+        <span className='text-sm'>{language?.name}</span>
       </div>
       <div className='flex items-center gap-4'>
         <Button
