@@ -29,26 +29,32 @@ export const CodeItemHeader = ({ code, showCode }: CodeItemHeaderProps) => {
             showCode && 'justify-start'
           )}
         >
-          <Button
+          <div
             onClick={() => setSelectedCode(code)}
-            variant='link'
-            className='shrink-1 text-black dark:text-white hover:text-primary dark:hover:text-primary whitespace-normal text-left font-bold p-0 text-lg'
-          >
-            {code.title}
-          </Button>
-          <span
             role='button'
-            className='cursor-pointer  hover:text-red-500 transition-colors duration-300'
+            className='group text-black dark:text-white whitespace-normal text-left font-bold p-0 text-lg'
           >
-            {code.favorited ? (
-              <FaHeart size={20} className='text-red-500' />
-            ) : (
-              <FaRegHeart
-                size={20}
-                className='text-neutral-400 hover:text-red-500 transition-colors duration-300'
-              />
-            )}
-          </span>
+            <span className='hover:text-primary dark:hover:text-primary transition-all duration-200 hover:underline hover:underline-offset-4 hover:decoration-primary dark:hover:decoration-primary'>
+              {code.title}
+            </span>
+            <span
+              role='button'
+              className='inline-flex relative top-1 ml-2 cursor-pointer hover:text-red-500 transition-colors duration-300'
+              onClick={(e) => {
+                e.stopPropagation();
+                // TODO: Add favorite toggle handler
+              }}
+            >
+              {code.favorited ? (
+                <FaHeart size={20} className='text-red-500' />
+              ) : (
+                <FaRegHeart
+                  size={20}
+                  className='text-neutral-400 hover:text-red-500 transition-colors duration-300'
+                />
+              )}
+            </span>
+          </div>
         </div>
         {showCode && (
           <Button
