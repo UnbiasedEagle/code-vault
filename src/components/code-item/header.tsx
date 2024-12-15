@@ -3,16 +3,16 @@
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { Button } from '../ui/button';
 import { CardHeader } from '../ui/card';
-import { Code } from '@prisma/client';
 import { useShowCode } from '@/stores/use-show-code';
 import { cn } from '@/lib/utils';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useEditCode } from '@/stores/use-edit-code';
 import { useCreateCode } from '@/stores/use-create-code';
+import { CodeWithTags } from '@/types';
 
 interface CodeItemHeaderProps {
   showCode: boolean;
-  code: Code;
+  code: CodeWithTags;
 }
 
 export const CodeItemHeader = ({ code, showCode }: CodeItemHeaderProps) => {
