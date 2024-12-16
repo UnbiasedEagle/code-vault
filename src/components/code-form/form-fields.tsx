@@ -126,7 +126,10 @@ export const FormFields = ({ form, tags, formKey }: FormFieldsProps) => {
                 <SelectContent>
                   {Languages.map((lang) => (
                     <SelectItem key={lang.label} value={lang.label}>
-                      {lang.name}
+                      <div className='flex items-center space-x-1'>
+                        <lang.icon />
+                        <span>{lang.name}</span>
+                      </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
