@@ -87,7 +87,7 @@ export const FormFields = ({ form, tags, formKey }: FormFieldsProps) => {
         render={({ field }) => (
           <FormItem className='flex items-start space-x-2'>
             <FormLabel htmlFor='description'>
-              <FaFileAlt className='mt-3' size={16} />
+              <FaFileAlt className='mt-4' size={16} />
             </FormLabel>
             <FormControl>
               <Textarea {...field} placeholder='New Description...' />

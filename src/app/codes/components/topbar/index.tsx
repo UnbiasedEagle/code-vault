@@ -33,7 +33,13 @@ export const TopBar = ({ imageUrl, fullName, email }: TopBarProps) => {
     <Card>
       <CardContent className='p-4'>
         <div className='flex items-center justify-between gap-6'>
-          <UserProfile imageUrl={imageUrl} fullName={fullName} email={email} />
+          <div className='hidden sm:block'>
+            <UserProfile
+              imageUrl={imageUrl}
+              fullName={fullName}
+              email={email}
+            />
+          </div>
           <div className='flex items-center gap-2.5 flex-1 max-w-4xl'>
             <SearchBar value={searchQuery} onChange={setSearchQuery} />
             <CreateCodeButton />
