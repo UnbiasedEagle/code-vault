@@ -20,7 +20,7 @@ const CodesPage = async () => {
       name: true,
     },
     orderBy: {
-      createdAt: 'desc',
+      updatedAt: 'desc',
     },
   });
 
@@ -37,7 +37,7 @@ const CodesPage = async () => {
       },
     },
     orderBy: {
-      createdAt: 'desc',
+      updatedAt: 'desc',
     },
   });
 

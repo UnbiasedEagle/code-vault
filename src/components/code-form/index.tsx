@@ -17,7 +17,7 @@ export const CodeForm = ({ tags }: CodeFormProps) => {
     useCodeForm();
 
   return (
-    <Card className='h-[660px] overflow-y-auto'>
+    <Card className='max-h-[700px] lg:max-h-max overflow-y-auto'>
       <CardContent className='p-4'>
         <FormHeader isEditing={isEditing} onClose={onClose} />
         <Form {...form}>

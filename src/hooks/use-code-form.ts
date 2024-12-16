@@ -8,6 +8,7 @@ import { useCreateCode } from '@/stores/use-create-code';
 import { useShowCode } from '@/stores/use-show-code';
 import { toast } from 'sonner';
 import { createCode } from '@/actions/create-code';
+import { updateCode } from '@/actions/update-code';
 
 type CodeForm = z.infer<typeof CodeFormSchema>;
 
@@ -62,7 +63,19 @@ export const useCodeForm = () => {
       formData.append('tags', JSON.stringify(data.tags));
 
       if (editCode.selectedCode) {
-        // TODO: Implement update code
+        const result = await updateCode(
+          null,
+          editCode.selectedCode.id,
+          formData
+        );
+        if (result.success) {
+          toast.success(result.message);
+          setSelectedCode(null);
+          editCode.setSelectedCode(null);
+          newCode.setShowNewCode(false);
+        } else {
+          toast.error(result.error);
+        }
       } else {
         const result = await createCode(null, formData);
         if (result.success) {
