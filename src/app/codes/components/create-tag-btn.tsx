@@ -23,6 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { FaSpinner } from 'react-icons/fa';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -66,7 +67,7 @@ export const CreateTagBtn = () => {
         <Plus className='h-5 w-5' />
         Tag
       </Button>
-      <DialogContent>
+      <DialogContent className='w-[90%] mx-auto rounded-lg'>
         <DialogHeader>
           <DialogTitle>Create New Tag</DialogTitle>
           <DialogDescription>
@@ -87,7 +88,7 @@ export const CreateTagBtn = () => {
                 </FormItem>
               )}
             />
-            <DialogFooter className='mt-6'>
+            <DialogFooter className='flex flex-row justify-end gap-4 mt-6'>
               <Button
                 type='button'
                 variant='outline'
@@ -96,7 +97,14 @@ export const CreateTagBtn = () => {
                 Cancel
               </Button>
               <Button disabled={isPending} type='submit'>
-                Create
+                {isPending ? (
+                  <>
+                    <FaSpinner size={16} className='animate-spin mr-2' />
+                    <span>Creating</span>
+                  </>
+                ) : (
+                  'Create'
+                )}
               </Button>
             </DialogFooter>
           </form>

@@ -7,6 +7,7 @@ import { SimpleTag } from '@/types';
 import { FormHeader } from './form-header';
 import { FormFields } from './form-fields';
 import { useCodeForm } from '../../hooks/use-code-form';
+import { FaSpinner } from 'react-icons/fa';
 
 interface CodeFormProps {
   tags: SimpleTag[];
@@ -25,7 +26,16 @@ export const CodeForm = ({ tags }: CodeFormProps) => {
             <FormFields form={form} tags={tags} formKey={formKey} />
             <div className='flex justify-end'>
               <Button disabled={pending} type='submit'>
-                {isEditing ? 'Update' : 'Save'}
+                {pending ? (
+                  <>
+                    <FaSpinner size={16} className='animate-spin mr-2' />
+                    <span>{isEditing ? 'Updating' : 'Saving'}</span>
+                  </>
+                ) : isEditing ? (
+                  'Update'
+                ) : (
+                  'Save'
+                )}
               </Button>
             </div>
           </form>
