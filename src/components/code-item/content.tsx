@@ -1,8 +1,5 @@
-'use client';
-
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco, monokai } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { useTheme } from 'next-themes';
+import { monokai } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { cn } from '@/lib/utils';
 import { Badge } from '../ui/badge';
 import { CardContent } from '../ui/card';
@@ -21,8 +18,6 @@ export const CodeItemContent = ({
   codeString,
   description,
 }: CodeItemContentProps) => {
-  const { theme } = useTheme();
-
   return (
     <CardContent
       className={cn('flex flex-col gap-4 px-4', {
@@ -37,11 +32,7 @@ export const CodeItemContent = ({
         ))}
       </ul>
       <p>{description}</p>
-      <SyntaxHighlighter
-        wrapLongLines
-        language='javascript'
-        style={theme === 'dark' ? monokai : docco}
-      >
+      <SyntaxHighlighter wrapLongLines language='javascript' style={monokai}>
         {codeString}
       </SyntaxHighlighter>
     </CardContent>
