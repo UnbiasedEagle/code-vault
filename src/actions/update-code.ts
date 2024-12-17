@@ -65,3 +65,49 @@ export async function updateCode(
     message: 'Code updated successfully',
   };
 }
+
+export async function updateCodeFavorite(prevState: unknown, id: string) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    return redirect('/sign-in');
+  }
+
+  const code = await prisma.code.findFirst({
+    where: {
+      id,
+      userId,
+    },
+  });
+
+  if (!code) {
+    return {
+      error: 'Code not found',
+    };
+  }
+
+  const updatedCode = await prisma.code.update({
+    where: {
+      id,
+    },
+    data: {
+      favorited: !code.favorited,
+    },
+    include: {
+      tags: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
+
+  revalidatePath('/codes');
+
+  return {
+    success: true,
+    message: code.favorited ? 'Removed from favorites.' : 'Added to favorites!',
+    data: updatedCode,
+  };
+}

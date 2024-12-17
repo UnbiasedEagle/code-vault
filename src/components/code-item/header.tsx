@@ -1,14 +1,17 @@
 'use client';
 
+import { updateCodeFavorite } from '@/actions/update-code';
+import { cn } from '@/lib/utils';
+import { useCreateCode } from '@/stores/use-create-code';
+import { useEditCode } from '@/stores/use-edit-code';
+import { useShowCode } from '@/stores/use-show-code';
+import { CodeWithTags } from '@/types';
+import { startTransition, useState } from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { toast } from 'sonner';
 import { Button } from '../ui/button';
 import { CardHeader } from '../ui/card';
-import { useShowCode } from '@/stores/use-show-code';
-import { cn } from '@/lib/utils';
-import { AiOutlineClose } from 'react-icons/ai';
-import { useEditCode } from '@/stores/use-edit-code';
-import { useCreateCode } from '@/stores/use-create-code';
-import { CodeWithTags } from '@/types';
 
 interface CodeItemHeaderProps {
   showCode: boolean;
@@ -16,9 +19,28 @@ interface CodeItemHeaderProps {
 }
 
 export const CodeItemHeader = ({ code, showCode }: CodeItemHeaderProps) => {
-  const setSelectedCode = useShowCode((state) => state.setSelectedCode);
+  const [pendingFavorite, setPendingFavorite] = useState(false);
+  const { selectedCode, setSelectedCode } = useShowCode();
   const setEditCode = useEditCode((state) => state.setSelectedCode);
   const setShowNewCode = useCreateCode((state) => state.setShowNewCode);
+
+  const handleFavoriteClick = async () => {
+    try {
+      const response = await updateCodeFavorite(null, code.id);
+      if (response.success) {
+        toast.success(response.message);
+        if (selectedCode?.id === code.id) {
+          setSelectedCode(response.data);
+        }
+      } else if (response.error) {
+        toast.error(response.error);
+      }
+    } catch {
+      toast.error('Something went wrong');
+    } finally {
+      setPendingFavorite(false);
+    }
+  };
 
   return (
     <CardHeader className='p-4 flex flex-col gap-2'>
@@ -39,10 +61,17 @@ export const CodeItemHeader = ({ code, showCode }: CodeItemHeaderProps) => {
             </span>
             <span
               role='button'
-              className='inline-flex relative top-1 ml-2 cursor-pointer hover:text-red-500 transition-colors duration-300'
+              className={cn(
+                'inline-flex relative top-1 ml-2 cursor-pointer hover:text-red-500 transition-colors duration-300',
+                pendingFavorite && 'cursor-not-allowed'
+              )}
               onClick={(e) => {
                 e.stopPropagation();
-                // TODO: Add favorite toggle handler
+                setPendingFavorite(true);
+                startTransition(() => {
+                  handleFavoriteClick();
+                  setPendingFavorite(false);
+                });
               }}
             >
               {code.favorited ? (
