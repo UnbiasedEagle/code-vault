@@ -27,6 +27,7 @@ const CodesPage = async () => {
   const codes = await prisma.code.findMany({
     where: {
       userId: user.id,
+      trashed: false,
     },
     include: {
       tags: {

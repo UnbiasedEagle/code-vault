@@ -111,3 +111,40 @@ export async function updateCodeFavorite(prevState: unknown, id: string) {
     data: updatedCode,
   };
 }
+
+export async function markCodeTrash(prevState: unknown, id: string) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    return redirect('/sign-in');
+  }
+
+  const code = await prisma.code.findFirst({
+    where: {
+      id,
+      userId,
+    },
+  });
+
+  if (!code) {
+    return {
+      error: 'Code not found',
+    };
+  }
+
+  await prisma.code.update({
+    where: {
+      id,
+    },
+    data: {
+      trashed: true,
+    },
+  });
+
+  revalidatePath('/codes');
+
+  return {
+    success: true,
+    message: 'Code moved to trash',
+  };
+}

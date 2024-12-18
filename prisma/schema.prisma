@@ -21,6 +21,7 @@ model Code {
   code        String
   language    String
   favorited   Boolean @default(false)
+  trashed     Boolean @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   tags        Tag[] 
