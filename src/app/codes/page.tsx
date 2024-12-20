@@ -45,6 +45,7 @@ const CodesPage = async () => {
   return (
     <div className='h-full scrollbar-hide overflow-auto flex flex-col gap-5'>
       <TopBar
+        tags={tags}
         imageUrl={user.imageUrl}
         fullName={user.firstName + ' ' + user.lastName}
         email={user.emailAddresses[0].emailAddress}

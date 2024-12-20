@@ -19,14 +19,16 @@ import { useState } from 'react';
 import { CreateCodeButton } from './create-code-button';
 import { SearchBar } from './search-bar';
 import { UserProfile } from './user-profile';
+import { SimpleTag } from '@/types';
 
 interface TopBarProps {
   imageUrl: string;
   fullName: string;
   email: string;
+  tags: SimpleTag[];
 }
 
-export const TopBar = ({ imageUrl, fullName, email }: TopBarProps) => {
+export const TopBar = ({ imageUrl, fullName, email, tags }: TopBarProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
@@ -65,7 +67,7 @@ export const TopBar = ({ imageUrl, fullName, email }: TopBarProps) => {
                   <div className='flex flex-col h-full'>
                     <Logo />
                     <div className='flex-1 flex flex-col gap-6 p-6 overflow-y-auto'>
-                      <QuickLinks />
+                      <QuickLinks tags={tags} />
                       <Languages />
                     </div>
                     <div className='p-4 border-t border-border bg-card/50'>

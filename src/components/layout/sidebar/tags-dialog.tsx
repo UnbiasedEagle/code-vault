@@ -10,16 +10,22 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Edit, Search, Trash } from 'lucide-react';
+import { MdRadioButtonChecked } from 'react-icons/md';
 import { IoMdPricetags } from 'react-icons/io';
+import { SimpleTag } from '@/types';
 
-export const TagsDialog = () => {
+interface TagsDialogProps {
+  tags: SimpleTag[];
+}
+
+export const TagsDialog = ({ tags }: TagsDialogProps) => {
   return (
     <Dialog>
       <DialogTrigger className='w-full flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent/50 hover:text-accent-foreground transition-all'>
         <IoMdPricetags size={18} />
         <span>Tags</span>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className='w-[90%] rounded-lg'>
         <DialogHeader>
           <DialogTitle className='flex items-center gap-2'>
             <span>
@@ -40,357 +46,44 @@ export const TagsDialog = () => {
           </div>
           <CreateTagBtn />
         </div>
-        <div className='max-h-96 overflow-y-auto flex flex-col gap-2 mt-2 p-1'>
-          <Card>
-            <CardContent className='px-4 py-2'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <span className='inline-block h-3 w-3 rounded-full bg-primary'></span>
-                  <div className='flex flex-col'>
-                    <span className='font-semibold text-base text-foreground'>
-                      API Methods
-                    </span>
-                    <span className='text-sm text-muted-foreground'>
-                      2 codes
-                    </span>
+        <div className='max-h-80 overflow-y-auto flex flex-col gap-2 mt-2 p-1'>
+          {tags.map((tag) => (
+            <Card key={tag.id}>
+              <CardContent className='p-2'>
+                <div className='flex items-center gap-4 justify-between'>
+                  <div className='flex items-center gap-2'>
+                    <div>
+                      <MdRadioButtonChecked
+                        className='text-primary'
+                        size={16}
+                      />
+                    </div>
+                    <div className='flex flex-col'>
+                      <div className='flex items-center gap-1'>
+                        <span className='text-base font-semibold text-foreground'>
+                          {tag.name}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='flex items-center gap-2'>
+                    <Button variant='outline' size='icon' className='h-8 w-8'>
+                      <Edit className='h-4 w-4 text-gray-600' />
+                      <span className='sr-only'>Edit</span>
+                    </Button>
+                    <Button
+                      variant='destructive'
+                      size='icon'
+                      className='h-8 w-8'
+                    >
+                      <Trash className='h-4 w-4' />
+                      <span className='sr-only'>Delete</span>
+                    </Button>
                   </div>
                 </div>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='secondary'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Edit className='h-4 w-4' />
-                    <span className='sr-only'>Edit</span>
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Trash className='h-4 w-4' />
-                    <span className='sr-only'>Delete</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className='px-4 py-2'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <span className='inline-block h-3 w-3 rounded-full bg-primary'></span>
-                  <div className='flex flex-col'>
-                    <span className='font-semibold text-base text-foreground'>
-                      API Methods
-                    </span>
-                    <span className='text-sm text-muted-foreground'>
-                      2 codes
-                    </span>
-                  </div>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='secondary'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Edit className='h-4 w-4' />
-                    <span className='sr-only'>Edit</span>
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Trash className='h-4 w-4' />
-                    <span className='sr-only'>Delete</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className='px-4 py-2'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <span className='inline-block h-3 w-3 rounded-full bg-primary'></span>
-                  <div className='flex flex-col'>
-                    <span className='font-semibold text-base text-foreground'>
-                      API Methods
-                    </span>
-                    <span className='text-sm text-muted-foreground'>
-                      2 codes
-                    </span>
-                  </div>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='secondary'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Edit className='h-4 w-4' />
-                    <span className='sr-only'>Edit</span>
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Trash className='h-4 w-4' />
-                    <span className='sr-only'>Delete</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className='px-4 py-2'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <span className='inline-block h-3 w-3 rounded-full bg-primary'></span>
-                  <div className='flex flex-col'>
-                    <span className='font-semibold text-base text-foreground'>
-                      API Methods
-                    </span>
-                    <span className='text-sm text-muted-foreground'>
-                      2 codes
-                    </span>
-                  </div>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='secondary'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Edit className='h-4 w-4' />
-                    <span className='sr-only'>Edit</span>
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Trash className='h-4 w-4' />
-                    <span className='sr-only'>Delete</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className='px-4 py-2'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <span className='inline-block h-3 w-3 rounded-full bg-primary'></span>
-                  <div className='flex flex-col'>
-                    <span className='font-semibold text-base text-foreground'>
-                      API Methods
-                    </span>
-                    <span className='text-sm text-muted-foreground'>
-                      2 codes
-                    </span>
-                  </div>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='secondary'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Edit className='h-4 w-4' />
-                    <span className='sr-only'>Edit</span>
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Trash className='h-4 w-4' />
-                    <span className='sr-only'>Delete</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className='px-4 py-2'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <span className='inline-block h-3 w-3 rounded-full bg-primary'></span>
-                  <div className='flex flex-col'>
-                    <span className='font-semibold text-base text-foreground'>
-                      API Methods
-                    </span>
-                    <span className='text-sm text-muted-foreground'>
-                      2 codes
-                    </span>
-                  </div>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='secondary'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Edit className='h-4 w-4' />
-                    <span className='sr-only'>Edit</span>
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Trash className='h-4 w-4' />
-                    <span className='sr-only'>Delete</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className='px-4 py-2'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <span className='inline-block h-3 w-3 rounded-full bg-primary'></span>
-                  <div className='flex flex-col'>
-                    <span className='font-semibold text-base text-foreground'>
-                      API Methods
-                    </span>
-                    <span className='text-sm text-muted-foreground'>
-                      2 codes
-                    </span>
-                  </div>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='secondary'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Edit className='h-4 w-4' />
-                    <span className='sr-only'>Edit</span>
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Trash className='h-4 w-4' />
-                    <span className='sr-only'>Delete</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className='px-4 py-2'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <span className='inline-block h-3 w-3 rounded-full bg-primary'></span>
-                  <div className='flex flex-col'>
-                    <span className='font-semibold text-base text-foreground'>
-                      API Methods
-                    </span>
-                    <span className='text-sm text-muted-foreground'>
-                      2 codes
-                    </span>
-                  </div>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='secondary'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Edit className='h-4 w-4' />
-                    <span className='sr-only'>Edit</span>
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Trash className='h-4 w-4' />
-                    <span className='sr-only'>Delete</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className='px-4 py-2'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <span className='inline-block h-3 w-3 rounded-full bg-primary'></span>
-                  <div className='flex flex-col'>
-                    <span className='font-semibold text-base text-foreground'>
-                      API Methods
-                    </span>
-                    <span className='text-sm text-muted-foreground'>
-                      2 codes
-                    </span>
-                  </div>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='secondary'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Edit className='h-4 w-4' />
-                    <span className='sr-only'>Edit</span>
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Trash className='h-4 w-4' />
-                    <span className='sr-only'>Delete</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className='px-4 py-2'>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  <span className='inline-block h-3 w-3 rounded-full bg-primary'></span>
-                  <div className='flex flex-col'>
-                    <span className='font-semibold text-base text-foreground'>
-                      API Methods
-                    </span>
-                    <span className='text-sm text-muted-foreground'>
-                      2 codes
-                    </span>
-                  </div>
-                </div>
-                <div className='flex items-center space-x-2'>
-                  <Button
-                    variant='secondary'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Edit className='h-4 w-4' />
-                    <span className='sr-only'>Edit</span>
-                  </Button>
-                  <Button
-                    variant='destructive'
-                    size='icon'
-                    className='h-8 w-8 border'
-                  >
-                    <Trash className='h-4 w-4' />
-                    <span className='sr-only'>Delete</span>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </DialogContent>
     </Dialog>

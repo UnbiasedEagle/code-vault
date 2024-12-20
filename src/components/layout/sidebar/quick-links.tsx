@@ -8,6 +8,7 @@ import { useSearchParams } from 'next/navigation';
 import { AiFillSnippets, AiOutlineHeart } from 'react-icons/ai';
 import { IoMdPricetags } from 'react-icons/io';
 import { TagsDialog } from './tags-dialog';
+import { SimpleTag } from '@/types';
 
 const links = [
   {
@@ -31,7 +32,11 @@ const links = [
   },
 ];
 
-export const QuickLinks = () => {
+interface QuickLinksProps {
+  tags: SimpleTag[];
+}
+
+export const QuickLinks = ({ tags }: QuickLinksProps) => {
   const searchParams = useSearchParams();
 
   return (
@@ -68,7 +73,7 @@ export const QuickLinks = () => {
                 </li>
               );
             }
-            return <TagsDialog key={item.label} />;
+            return <TagsDialog tags={tags} key={item.label} />;
           })}
         </ul>
       </nav>

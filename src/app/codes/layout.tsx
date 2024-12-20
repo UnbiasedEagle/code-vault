@@ -1,7 +1,7 @@
 import { Sidebar } from '@/components/layout/sidebar';
 import { PropsWithChildren } from 'react';
 
-const CodesLayout = ({ children }: PropsWithChildren) => {
+const CodesLayout = async ({ children }: PropsWithChildren) => {
   return (
     <div className='flex min-h-screen bg-background dark:bg-gradient-to-br dark:from-background dark:to-background/95'>
       <Sidebar />
