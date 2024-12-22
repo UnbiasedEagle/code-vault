@@ -6,4 +6,4 @@ export type CodeWithTags = Code & {
   tags: SimpleTag[];
 };
 
-export type CodeFilter = 'all' | 'favorites' | 'trashed';
+export type CodeFilter = 'all' | 'favorites' | 'archived';

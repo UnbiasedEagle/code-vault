@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Edit, Search, Trash } from 'lucide-react';
+import { Edit, Search, Archive } from 'lucide-react';
 import { MdRadioButtonChecked } from 'react-icons/md';
 import { IoMdPricetags } from 'react-icons/io';
 import { SimpleTag } from '@/types';
@@ -76,8 +76,8 @@ export const TagsDialog = ({ tags }: TagsDialogProps) => {
                       size='icon'
                       className='h-8 w-8'
                     >
-                      <Trash className='h-4 w-4' />
-                      <span className='sr-only'>Delete</span>
+                      <Archive size={20} />
+                      <span className='sr-only'>Archive</span>
                     </Button>
                   </div>
                 </div>

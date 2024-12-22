@@ -1,14 +1,13 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Trash } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-
-import { AiFillSnippets, AiOutlineHeart } from 'react-icons/ai';
+import { AiFillSnippets } from 'react-icons/ai';
 import { IoMdPricetags } from 'react-icons/io';
 import { TagsDialog } from './tags-dialog';
 import { SimpleTag } from '@/types';
+import { Archive, Heart } from 'lucide-react';
 
 const links = [
   {
@@ -17,14 +16,14 @@ const links = [
     query: 'filter=all',
   },
   {
-    icon: AiOutlineHeart,
+    icon: Heart,
     label: 'Favorites',
     query: 'filter=favorites',
   },
   {
-    icon: Trash,
-    label: 'Trash',
-    query: 'filter=trashed',
+    icon: Archive,
+    label: 'Archive',
+    query: 'filter=archived',
   },
   {
     icon: IoMdPricetags,

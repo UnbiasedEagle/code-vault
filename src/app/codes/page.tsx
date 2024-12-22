@@ -4,6 +4,7 @@ import { ContentArea } from './components/content-area';
 import { TopBar } from './components/topbar';
 import prisma from '@/lib/db';
 import { CodeFilter } from '@/types';
+import { Prisma } from '@prisma/client';
 
 interface CodePageProps {
   searchParams: Promise<{
@@ -14,6 +15,12 @@ interface CodePageProps {
 const CodesPage = async ({ searchParams }: CodePageProps) => {
   const params = await searchParams;
   const user = await currentUser();
+
+  let filter: CodeFilter = 'all';
+
+  if (params.filter) {
+    filter = params.filter as CodeFilter;
+  }
 
   if (!user) {
     return redirect('/sign-in');
@@ -32,11 +39,21 @@ const CodesPage = async ({ searchParams }: CodePageProps) => {
     },
   });
 
+  const query: Prisma.CodeFindManyArgs['where'] = {
+    userId: user.id,
+    archived: false,
+  };
+
+  if (filter === 'favorites') {
+    query.favorited = true;
+  }
+
+  if (filter === 'archived') {
+    query.archived = true;
+  }
+
   const codes = await prisma.code.findMany({
-    where: {
-      userId: user.id,
-      trashed: false,
-    },
+    where: query,
     include: {
       tags: {
         select: {
@@ -49,12 +66,6 @@ const CodesPage = async ({ searchParams }: CodePageProps) => {
       updatedAt: 'desc',
     },
   });
-
-  let filter: CodeFilter = 'all';
-
-  if (params.filter) {
-    filter = params.filter as CodeFilter;
-  }
 
   return (
     <div className='h-full scrollbar-hide overflow-auto flex flex-col gap-5'>

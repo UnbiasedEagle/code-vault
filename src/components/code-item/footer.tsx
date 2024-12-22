@@ -1,4 +1,4 @@
-import { Edit, Trash } from 'lucide-react';
+import { Edit, Archive } from 'lucide-react';
 import { Button } from '../ui/button';
 import { CardFooter } from '../ui/card';
 import { useEditCode } from '@/stores/use-edit-code';
@@ -8,7 +8,7 @@ import { cn, Languages } from '@/lib/utils';
 import { IconType } from 'react-icons/lib';
 import { startTransition, useState } from 'react';
 import { toast } from 'sonner';
-import { markCodeTrash } from '@/actions/update-code';
+import { markCodeArchived } from '@/actions/update-code';
 
 interface CodeItemFooterProps {
   code: CodeWithTags;
@@ -24,7 +24,7 @@ export const CodeItemFooter = ({ code }: CodeItemFooterProps) => {
 
   const handleCodeDelete = async () => {
     try {
-      const response = await markCodeTrash(null, code.id);
+      const response = await markCodeArchived(null, code.id);
       if (response.success) {
         toast.success(response.message);
       } else if (response.error) {
@@ -69,7 +69,7 @@ export const CodeItemFooter = ({ code }: CodeItemFooterProps) => {
           )}
           variant='ghost'
         >
-          <Trash size={20} className='text-red-500 p-0 text-base' />
+          <Archive size={20} className='text-primary p-0' />
         </Button>
       </div>
     </CardFooter>

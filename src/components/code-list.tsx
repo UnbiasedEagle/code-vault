@@ -1,6 +1,8 @@
 import { CodeFilter, CodeWithTags } from '@/types';
 import { CodeItem } from './code-item';
 import { CreateCodeButton } from '@/app/codes/components/topbar/create-code-button';
+import { Archive } from 'lucide-react';
+import { FaHeart } from 'react-icons/fa';
 
 interface CodeListProps {
   codeItems: CodeWithTags[];
@@ -12,13 +14,23 @@ const getEmptyMessage = (filter: CodeFilter) => {
   switch (filter) {
     case 'favorites':
       return {
-        title: 'No favorite code items found',
+        title: (
+          <span className='whitespace-normal'>
+            No <FaHeart size={20} className='text-red-500 inline-flex' /> code
+            items found
+          </span>
+        ),
         description: 'Mark code items as favorite to easily find them here.',
       };
-    case 'trashed':
+    case 'archived':
       return {
-        title: 'No trashed code items found',
-        description: 'Deleted code items will appear here.',
+        title: (
+          <span className='whitespace-normal'>
+            No <Archive size={20} className='text-primary inline-flex' /> code
+            items found
+          </span>
+        ),
+        description: 'Archived code items will appear here.',
       };
     default:
       return {

@@ -112,7 +112,7 @@ export async function updateCodeFavorite(prevState: unknown, id: string) {
   };
 }
 
-export async function markCodeTrash(prevState: unknown, id: string) {
+export async function markCodeArchived(prevState: unknown, id: string) {
   const { userId } = await auth();
 
   if (!userId) {
@@ -137,7 +137,7 @@ export async function markCodeTrash(prevState: unknown, id: string) {
       id,
     },
     data: {
-      trashed: true,
+      archived: true,
     },
   });
 
@@ -145,6 +145,6 @@ export async function markCodeTrash(prevState: unknown, id: string) {
 
   return {
     success: true,
-    message: 'Code moved to trash',
+    message: 'Code moved to archive',
   };
 }
