@@ -1,41 +1,24 @@
-import { Edit, Archive } from 'lucide-react';
-import { Button } from '../ui/button';
-import { CardFooter } from '../ui/card';
-import { useEditCode } from '@/stores/use-edit-code';
-import { useShowCode } from '@/stores/use-show-code';
-import { CodeWithTags } from '@/types';
-import { cn, Languages } from '@/lib/utils';
+import { Languages } from '@/lib/utils';
+import { CodeFilter, CodeWithTags } from '@/types';
 import { IconType } from 'react-icons/lib';
-import { startTransition, useState } from 'react';
-import { toast } from 'sonner';
-import { markCodeArchived } from '@/actions/update-code';
+import { CardFooter } from '../ui/card';
+import {
+  ArchiveCodeFooterAction,
+  CodeUpdateFooterAction,
+} from './code-footer-action';
+import { useSearchParams } from 'next/navigation';
 
 interface CodeItemFooterProps {
   code: CodeWithTags;
 }
 
 export const CodeItemFooter = ({ code }: CodeItemFooterProps) => {
-  const [pendingDelete, setPendingDelete] = useState(false);
-  const setShowCompleteCode = useShowCode((state) => state.setSelectedCode);
-  const setSelectedCode = useEditCode((state) => state.setSelectedCode);
+  const params = useSearchParams();
+
+  const filter: CodeFilter = (params.get('filter') as CodeFilter) ?? 'all';
 
   const language = Languages.find((lang) => lang.label === code.language);
   const LanguageIcon = language?.icon as IconType;
-
-  const handleCodeDelete = async () => {
-    try {
-      const response = await markCodeArchived(null, code.id);
-      if (response.success) {
-        toast.success(response.message);
-      } else if (response.error) {
-        toast.error(response.error);
-      }
-    } catch {
-      toast.error('Failed to delete code');
-    } finally {
-      setPendingDelete(false);
-    }
-  };
 
   return (
     <CardFooter className='flex border-t px-4 py-2 items-center justify-between'>
@@ -45,33 +28,10 @@ export const CodeItemFooter = ({ code }: CodeItemFooterProps) => {
         </span>
         <span className='text-sm'>{language?.name}</span>
       </div>
-      <div className='flex items-center gap-4'>
-        <Button
-          onClick={() => {
-            setShowCompleteCode(null);
-            setSelectedCode(code);
-          }}
-          className='bg-background px-0 hover:bg-background'
-          variant='ghost'
-        >
-          <Edit size={20} className='text-blue-500 p-0 text-base' />
-        </Button>
-        <Button
-          onClick={() => {
-            setPendingDelete(true);
-            startTransition(() => {
-              handleCodeDelete();
-            });
-          }}
-          className={cn(
-            'bg-background px-0 hover:bg-background',
-            pendingDelete && 'cursor-not-allowed'
-          )}
-          variant='ghost'
-        >
-          <Archive size={20} className='text-primary p-0' />
-        </Button>
-      </div>
+      {(filter === 'all' || filter === 'favorites') && (
+        <CodeUpdateFooterAction code={code} />
+      )}
+      {filter === 'archived' && <ArchiveCodeFooterAction code={code} />}
     </CardFooter>
   );
 };

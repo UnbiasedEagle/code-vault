@@ -5,6 +5,7 @@ import { CodeFormSchema } from '@/schemas/code-form';
 import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { Prisma } from '@prisma/client';
 
 export async function updateCode(
   prevState: unknown,
@@ -86,13 +87,16 @@ export async function updateCodeFavorite(prevState: unknown, id: string) {
     };
   }
 
+  const updateCodeData: Prisma.CodeUpdateInput = {
+    favorited: !code.favorited,
+    archived: code.favorited ? code.archived : false,
+  };
+
   const updatedCode = await prisma.code.update({
     where: {
       id,
     },
-    data: {
-      favorited: !code.favorited,
-    },
+    data: updateCodeData,
     include: {
       tags: {
         select: {
@@ -138,6 +142,7 @@ export async function markCodeArchived(prevState: unknown, id: string) {
     },
     data: {
       archived: true,
+      favorited: false,
     },
   });
 
