@@ -8,14 +8,15 @@ import { cn } from '@/lib/utils';
 import { useCreateCode } from '@/stores/use-create-code';
 import { useShowCode } from '@/stores/use-show-code';
 import { CodeItem } from '@/components/code-item';
-import { CodeWithTags, SimpleTag } from '@/types';
+import { CodeFilter, CodeWithTags, SimpleTag } from '@/types';
 
 interface ContentAreaProps {
   tags: SimpleTag[];
   codeItems: CodeWithTags[];
+  filter: CodeFilter;
 }
 
-export const ContentArea = ({ tags, codeItems }: ContentAreaProps) => {
+export const ContentArea = ({ tags, codeItems, filter }: ContentAreaProps) => {
   const completeCode = useShowCode();
   const editCode = useEditCode();
   const createCode = useCreateCode();
@@ -34,7 +35,7 @@ export const ContentArea = ({ tags, codeItems }: ContentAreaProps) => {
               : 'w-full'
           )}
         >
-          <CodeList codeItems={codeItems} showCode={false} />
+          <CodeList filter={filter} codeItems={codeItems} showCode={false} />
         </div>
         {completeCode.selectedCode !== null ? (
           <>

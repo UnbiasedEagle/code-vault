@@ -46,7 +46,7 @@ export const TagsDialog = ({ tags }: TagsDialogProps) => {
           </div>
           <CreateTagBtn />
         </div>
-        <div className='max-h-80 overflow-y-auto flex flex-col gap-2 mt-2 p-1'>
+        <div className='max-h-72 overflow-y-auto flex flex-col gap-2 mt-2 p-1'>
           {tags.map((tag) => (
             <Card key={tag.id}>
               <CardContent className='p-2'>

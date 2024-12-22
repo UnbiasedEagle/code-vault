@@ -3,8 +3,16 @@ import { redirect } from 'next/navigation';
 import { ContentArea } from './components/content-area';
 import { TopBar } from './components/topbar';
 import prisma from '@/lib/db';
+import { CodeFilter } from '@/types';
 
-const CodesPage = async () => {
+interface CodePageProps {
+  searchParams: Promise<{
+    filter: string;
+  }>;
+}
+
+const CodesPage = async ({ searchParams }: CodePageProps) => {
+  const params = await searchParams;
   const user = await currentUser();
 
   if (!user) {
@@ -42,6 +50,12 @@ const CodesPage = async () => {
     },
   });
 
+  let filter: CodeFilter = 'all';
+
+  if (params.filter) {
+    filter = params.filter as CodeFilter;
+  }
+
   return (
     <div className='h-full scrollbar-hide overflow-auto flex flex-col gap-5'>
       <TopBar
@@ -50,7 +64,7 @@ const CodesPage = async () => {
         fullName={user.firstName + ' ' + user.lastName}
         email={user.emailAddresses[0].emailAddress}
       />
-      <ContentArea codeItems={codes} tags={tags} />
+      <ContentArea filter={filter} codeItems={codes} tags={tags} />
     </div>
   );
 };
