@@ -153,3 +153,40 @@ export async function markCodeArchived(prevState: unknown, id: string) {
     message: 'Code moved to archive',
   };
 }
+
+export async function restoreArchivedCode(prevState: unknown, id: string) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    return redirect('/sign-in');
+  }
+
+  const code = await prisma.code.findFirst({
+    where: {
+      id,
+      userId,
+    },
+  });
+
+  if (!code) {
+    return {
+      error: 'Code not found',
+    };
+  }
+
+  await prisma.code.update({
+    where: {
+      id,
+    },
+    data: {
+      archived: false,
+    },
+  });
+
+  revalidatePath('/codes');
+
+  return {
+    success: true,
+    message: 'Code restored from archive',
+  };
+}

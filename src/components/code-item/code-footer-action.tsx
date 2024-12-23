@@ -1,12 +1,13 @@
 import { toast } from 'sonner';
 import { Button } from '../ui/button';
-import { markCodeArchived } from '@/actions/update-code';
+import { markCodeArchived, restoreArchivedCode } from '@/actions/update-code';
 import { CodeWithTags } from '@/types';
 import { startTransition, useState } from 'react';
 import { useShowCode } from '@/stores/use-show-code';
 import { useEditCode } from '@/stores/use-edit-code';
-import { Archive, Edit, RotateCcw, Trash } from 'lucide-react';
+import { Archive, Edit, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { DeleteCodeDialog } from './delete-code-dialog';
 
 interface CodeUpdateFooterActionProps {
   code: CodeWithTags;
@@ -68,51 +69,40 @@ export const CodeUpdateFooterAction = ({
 export const ArchiveCodeFooterAction = ({
   code,
 }: CodeUpdateFooterActionProps) => {
-  const [pendingDelete, setPendingDelete] = useState(false);
-  const setShowCompleteCode = useShowCode((state) => state.setSelectedCode);
-  const setSelectedCode = useEditCode((state) => state.setSelectedCode);
+  const [pendingRestore, setPendingRestore] = useState(false);
 
-  const handleCodeDelete = async () => {
+  const handleCodeRestore = async () => {
     try {
-      const response = await markCodeArchived(null, code.id);
+      const response = await restoreArchivedCode(null, code.id);
       if (response.success) {
         toast.success(response.message);
       } else if (response.error) {
         toast.error(response.error);
       }
     } catch {
-      toast.error('Failed to move code to archive');
+      toast.error('Failed to restore code from archive');
     } finally {
-      setPendingDelete(false);
+      setPendingRestore(false);
     }
   };
   return (
     <div className='flex items-center gap-4'>
       <Button
         onClick={() => {
-          setShowCompleteCode(null);
-          setSelectedCode(code);
-        }}
-        className='bg-background px-0 hover:bg-background'
-        variant='ghost'
-      >
-        <RotateCcw size={20} className='text-blue-500 p-0 text-base' />
-      </Button>
-      <Button
-        onClick={() => {
-          setPendingDelete(true);
+          setPendingRestore(true);
           startTransition(() => {
-            handleCodeDelete();
+            handleCodeRestore();
           });
         }}
         className={cn(
           'bg-background px-0 hover:bg-background',
-          pendingDelete && 'cursor-not-allowed'
+          pendingRestore && 'cursor-not-allowed'
         )}
         variant='ghost'
       >
-        <Trash size={20} className='text-red-500 p-0' />
+        <RotateCcw size={20} className='text-blue-500 p-0 text-base' />
       </Button>
+      <DeleteCodeDialog codeId={code.id} />
     </div>
   );
 };
