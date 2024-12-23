@@ -13,12 +13,19 @@ import { Edit, Search, Archive } from 'lucide-react';
 import { MdRadioButtonChecked } from 'react-icons/md';
 import { IoMdPricetags } from 'react-icons/io';
 import { SimpleTag } from '@/types';
+import { useState } from 'react';
 
 interface TagsDialogProps {
   tags: SimpleTag[];
 }
 
 export const TagsDialog = ({ tags }: TagsDialogProps) => {
+  const [input, setInput] = useState('');
+
+  const filteredTags = tags.filter((tag) => {
+    return tag.name.toLowerCase().includes(input.toLowerCase());
+  });
+
   return (
     <Dialog>
       <DialogTrigger className='w-full flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent/50 hover:text-accent-foreground transition-all'>
@@ -40,6 +47,8 @@ export const TagsDialog = ({ tags }: TagsDialogProps) => {
               <Search className='h-4 w-4 text-muted-foreground' />
             </div>
             <Input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
               placeholder='Search tags...'
               className='h-9 pl-9 bg-muted/50'
             />
@@ -47,7 +56,7 @@ export const TagsDialog = ({ tags }: TagsDialogProps) => {
           <CreateTagBtn />
         </div>
         <div className='max-h-72 overflow-y-auto flex flex-col gap-2 mt-2 p-1'>
-          {tags.map((tag) => (
+          {filteredTags.map((tag) => (
             <Card key={tag.id}>
               <CardContent className='p-2'>
                 <div className='flex items-center gap-4 justify-between'>
