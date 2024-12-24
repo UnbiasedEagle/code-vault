@@ -9,11 +9,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { Edit, Search, Archive } from 'lucide-react';
-import { MdRadioButtonChecked } from 'react-icons/md';
-import { IoMdPricetags } from 'react-icons/io';
 import { SimpleTag } from '@/types';
+import { Edit, Search } from 'lucide-react';
 import { useState } from 'react';
+import { IoMdPricetags } from 'react-icons/io';
+import { MdRadioButtonChecked } from 'react-icons/md';
+import { DeleteTagDialog } from './delete-tag-dialog';
 
 interface TagsDialogProps {
   tags: SimpleTag[];
@@ -76,18 +77,11 @@ export const TagsDialog = ({ tags }: TagsDialogProps) => {
                     </div>
                   </div>
                   <div className='flex items-center gap-2'>
-                    <Button variant='outline' size='icon' className='h-8 w-8'>
-                      <Edit className='h-4 w-4 text-gray-600' />
+                    <Button variant='secondary' size='icon' className='h-8 w-8'>
+                      <Edit className='h-4 w-4' />
                       <span className='sr-only'>Edit</span>
                     </Button>
-                    <Button
-                      variant='destructive'
-                      size='icon'
-                      className='h-8 w-8'
-                    >
-                      <Archive size={20} />
-                      <span className='sr-only'>Archive</span>
-                    </Button>
+                    <DeleteTagDialog tagId={tag.id} />
                   </div>
                 </div>
               </CardContent>

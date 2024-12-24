@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -20,11 +14,11 @@ model Code {
   description String
   code        String
   language    String
-  favorited   Boolean @default(false)
-  archived     Boolean @default(false)
+  favorited   Boolean  @default(false)
+  archived    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  tags        Tag[] 
+  tags        Tag[]    @relation("CodeTags")
 }
 
 model Tag {
@@ -34,7 +28,5 @@ model Tag {
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  codes     Code[]
-
-  @@index([slug, userId])
+  codes     Code[]   @relation("CodeTags")
 }
