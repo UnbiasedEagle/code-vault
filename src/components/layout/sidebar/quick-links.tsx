@@ -1,29 +1,29 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { AiFillSnippets } from 'react-icons/ai';
 import { IoMdPricetags } from 'react-icons/io';
 import { TagsDialog } from './tags-dialog';
 import { SimpleTag } from '@/types';
 import { Archive, Heart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const links = [
   {
     icon: AiFillSnippets,
     label: 'All Codes',
-    query: 'filter=all',
+    query: 'all',
   },
   {
     icon: Heart,
     label: 'Favorites',
-    query: 'filter=favorites',
+    query: 'favorites',
   },
   {
     icon: Archive,
     label: 'Archive',
-    query: 'filter=archived',
+    query: 'archived',
   },
   {
     icon: IoMdPricetags,
@@ -36,6 +36,7 @@ interface QuickLinksProps {
 }
 
 export const QuickLinks = ({ tags }: QuickLinksProps) => {
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   return (
@@ -49,26 +50,32 @@ export const QuickLinks = ({ tags }: QuickLinksProps) => {
             const Icon = item.icon;
 
             if (item.query) {
-              let isActive = item.query.split('=')[1] === 'all';
+              let activeFilterQuery = 'all';
 
               if (searchParams.get('filter')) {
-                isActive =
-                  item.query.split('=')[1] === searchParams.get('filter');
+                activeFilterQuery = searchParams.get('filter') as string;
               }
 
               return (
                 <li key={item.label}>
-                  <Link
-                    href={`/codes?${item.query}`}
+                  <Button
+                    variant='ghost'
+                    onClick={() => {
+                      const currentParams = new URLSearchParams(
+                        window.location.search
+                      );
+                      currentParams.set('filter', item.query);
+                      router.push(`/codes?${currentParams.toString()}`);
+                    }}
                     className={cn(
-                      'flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent/50 hover:text-accent-foreground transition-all',
-                      isActive &&
+                      'w-full flex justify-start items-center gap-3 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent/50 hover:text-accent-foreground transition-all',
+                      activeFilterQuery === item.query &&
                         'bg-accent/50 text-accent-foreground shadow-sm'
                     )}
                   >
                     <Icon size={18} />
                     <span>{item.label}</span>
-                  </Link>
+                  </Button>
                 </li>
               );
             }

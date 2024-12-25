@@ -7,12 +7,16 @@ import {
 } from '@/components/ui/carousel';
 import { SimpleTag } from '@/types';
 import { CreateTagBtn } from './create-tag-btn';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface TagsSwiperProps {
   tags: SimpleTag[];
 }
 
 export const TagsSwiper = ({ tags }: TagsSwiperProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   return (
     <Card>
       <CardContent className='p-4'>
@@ -33,11 +37,37 @@ export const TagsSwiper = ({ tags }: TagsSwiperProps) => {
             >
               <CarouselContent className='flex text-neutral-400 font-medium'>
                 <CarouselItem>
-                  <Button>All</Button>
+                  <Button
+                    variant={searchParams.get('tag') ? 'secondary' : 'default'}
+                    onClick={() => {
+                      const currentParams = new URLSearchParams(
+                        window.location.search
+                      );
+                      currentParams.delete('tag');
+                      router.push(`/codes?${currentParams.toString()}`);
+                    }}
+                  >
+                    All
+                  </Button>
                 </CarouselItem>
                 {tags.map((tag) => (
                   <CarouselItem key={tag.id}>
-                    <Button variant='ghost'>{tag.name}</Button>
+                    <Button
+                      onClick={() => {
+                        const currentParams = new URLSearchParams(
+                          window.location.search
+                        );
+                        currentParams.set('tag', tag.id);
+                        router.push(`/codes?${currentParams.toString()}`);
+                      }}
+                      variant={
+                        searchParams.get('tag') === tag.id
+                          ? 'default'
+                          : 'secondary'
+                      }
+                    >
+                      {tag.name}
+                    </Button>
                   </CarouselItem>
                 ))}
               </CarouselContent>

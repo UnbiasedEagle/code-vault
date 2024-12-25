@@ -1,5 +1,4 @@
 import { CreateTagBtn } from '@/app/codes/components/create-tag-btn';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Dialog,
@@ -10,11 +9,13 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { SimpleTag } from '@/types';
-import { Edit, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { IoMdPricetags } from 'react-icons/io';
 import { MdRadioButtonChecked } from 'react-icons/md';
 import { DeleteTagDialog } from './delete-tag-dialog';
+import { EditTagDialog } from './edit-tag-dialog';
+import { useRouter } from 'next/navigation';
 
 interface TagsDialogProps {
   tags: SimpleTag[];
@@ -22,13 +23,16 @@ interface TagsDialogProps {
 
 export const TagsDialog = ({ tags }: TagsDialogProps) => {
   const [input, setInput] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const router = useRouter();
 
   const filteredTags = tags.filter((tag) => {
     return tag.name.toLowerCase().includes(input.toLowerCase());
   });
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className='w-full flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent/50 hover:text-accent-foreground transition-all'>
         <IoMdPricetags size={18} />
         <span>Tags</span>
@@ -61,7 +65,18 @@ export const TagsDialog = ({ tags }: TagsDialogProps) => {
             <Card key={tag.id}>
               <CardContent className='p-2'>
                 <div className='flex items-center gap-4 justify-between'>
-                  <div className='flex items-center gap-2'>
+                  <div
+                    role='button'
+                    onClick={() => {
+                      setOpen(false);
+                      const currentParams = new URLSearchParams(
+                        window.location.search
+                      );
+                      currentParams.set('tag', tag.id);
+                      router.push(`/codes?${currentParams.toString()}`);
+                    }}
+                    className='flex flex-1 items-center gap-2'
+                  >
                     <div>
                       <MdRadioButtonChecked
                         className='text-primary'
@@ -77,10 +92,7 @@ export const TagsDialog = ({ tags }: TagsDialogProps) => {
                     </div>
                   </div>
                   <div className='flex items-center gap-2'>
-                    <Button variant='secondary' size='icon' className='h-8 w-8'>
-                      <Edit className='h-4 w-4' />
-                      <span className='sr-only'>Edit</span>
-                    </Button>
+                    <EditTagDialog tag={tag} />
                     <DeleteTagDialog tagId={tag.id} />
                   </div>
                 </div>

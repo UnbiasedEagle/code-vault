@@ -9,6 +9,7 @@ import { Prisma } from '@prisma/client';
 interface CodePageProps {
   searchParams: Promise<{
     filter: string;
+    tag: string;
   }>;
 }
 
@@ -17,9 +18,14 @@ const CodesPage = async ({ searchParams }: CodePageProps) => {
   const user = await currentUser();
 
   let filter: CodeFilter = 'all';
+  let tagId: undefined | string;
 
   if (params.filter) {
     filter = params.filter as CodeFilter;
+  }
+
+  if (params.tag) {
+    tagId = params.tag;
   }
 
   if (!user) {
@@ -50,6 +56,14 @@ const CodesPage = async ({ searchParams }: CodePageProps) => {
 
   if (filter === 'archived') {
     query.archived = true;
+  }
+
+  if (tagId) {
+    query.tags = {
+      some: {
+        id: tagId,
+      },
+    };
   }
 
   const codes = await prisma.code.findMany({
