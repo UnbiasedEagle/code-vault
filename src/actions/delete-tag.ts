@@ -55,6 +55,6 @@ export async function deleteTag(prevState: unknown, tagId: string) {
 
   return {
     success: true,
-    message: 'Tag and associated codes deleted successfully!',
+    message: 'Tag deleted successfully!',
   };
 }
