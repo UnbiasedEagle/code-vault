@@ -14,12 +14,19 @@ import { Trash } from 'lucide-react';
 import { toast } from 'sonner';
 import { deleteCode } from '@/actions/delete-code';
 import { FaSpinner } from 'react-icons/fa';
+import { useCreateCode } from '@/stores/use-create-code';
+import { useShowCode } from '@/stores/use-show-code';
+import { useEditCode } from '@/stores/use-edit-code';
 
 interface DeleteCodeDialogProps {
   codeId: string;
 }
 
 export const DeleteCodeDialog = ({ codeId }: DeleteCodeDialogProps) => {
+  const setShowNewCode = useCreateCode((state) => state.setShowNewCode);
+  const setShowCompleteCode = useShowCode((state) => state.setSelectedCode);
+  const setSelectedCode = useEditCode((state) => state.setSelectedCode);
+
   const [pendingDelete, setPendingDelete] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,6 +37,9 @@ export const DeleteCodeDialog = ({ codeId }: DeleteCodeDialogProps) => {
       if (response.success) {
         toast.success(response.message);
         setIsOpen(false);
+        setShowNewCode(false);
+        setShowCompleteCode(null);
+        setSelectedCode(null);
       } else if (response.error) {
         toast.error(response.error);
       }

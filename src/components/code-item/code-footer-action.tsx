@@ -8,6 +8,7 @@ import { useEditCode } from '@/stores/use-edit-code';
 import { Archive, Edit, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DeleteCodeDialog } from './delete-code-dialog';
+import { useCreateCode } from '@/stores/use-create-code';
 
 interface CodeUpdateFooterActionProps {
   code: CodeWithTags;
@@ -17,10 +18,11 @@ export const CodeUpdateFooterAction = ({
   code,
 }: CodeUpdateFooterActionProps) => {
   const [pendingDelete, setPendingDelete] = useState(false);
+  const setShowNewCode = useCreateCode((state) => state.setShowNewCode);
   const setShowCompleteCode = useShowCode((state) => state.setSelectedCode);
   const setSelectedCode = useEditCode((state) => state.setSelectedCode);
 
-  const handleCodeDelete = async () => {
+  const handleCodeArchive = async () => {
     try {
       const response = await markCodeArchived(null, code.id);
       if (response.success) {
@@ -39,6 +41,7 @@ export const CodeUpdateFooterAction = ({
     <div className='flex items-center gap-4'>
       <Button
         onClick={() => {
+          setShowNewCode(false);
           setShowCompleteCode(null);
           setSelectedCode(code);
         }}
@@ -49,9 +52,14 @@ export const CodeUpdateFooterAction = ({
       </Button>
       <Button
         onClick={() => {
+          setShowNewCode(false);
+          setShowCompleteCode(null);
+          setSelectedCode(null);
+
           setPendingDelete(true);
+
           startTransition(() => {
-            handleCodeDelete();
+            handleCodeArchive();
           });
         }}
         className={cn(
@@ -69,6 +77,10 @@ export const CodeUpdateFooterAction = ({
 export const ArchiveCodeFooterAction = ({
   code,
 }: CodeUpdateFooterActionProps) => {
+  const setShowNewCode = useCreateCode((state) => state.setShowNewCode);
+  const setShowCompleteCode = useShowCode((state) => state.setSelectedCode);
+  const setSelectedCode = useEditCode((state) => state.setSelectedCode);
+
   const [pendingRestore, setPendingRestore] = useState(false);
 
   const handleCodeRestore = async () => {
@@ -89,6 +101,10 @@ export const ArchiveCodeFooterAction = ({
     <div className='flex items-center gap-4'>
       <Button
         onClick={() => {
+          setShowNewCode(false);
+          setShowCompleteCode(null);
+          setSelectedCode(null);
+
           setPendingRestore(true);
           startTransition(() => {
             handleCodeRestore();

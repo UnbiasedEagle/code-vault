@@ -9,6 +9,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { useCreateCode } from '@/stores/use-create-code';
+import { useEditCode } from '@/stores/use-edit-code';
+import { useShowCode } from '@/stores/use-show-code';
 import { Trash } from 'lucide-react';
 import { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
@@ -19,6 +22,10 @@ interface DeleteTagDialogProps {
 }
 
 export const DeleteTagDialog = ({ tagId }: DeleteTagDialogProps) => {
+  const setShowNewCode = useCreateCode((state) => state.setShowNewCode);
+  const setShowCompleteCode = useShowCode((state) => state.setSelectedCode);
+  const setSelectedCode = useEditCode((state) => state.setSelectedCode);
+
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -31,6 +38,9 @@ export const DeleteTagDialog = ({ tagId }: DeleteTagDialogProps) => {
         return;
       }
       toast.success(response.message);
+      setShowNewCode(false);
+      setShowCompleteCode(null);
+      setSelectedCode(null);
       setOpen(false);
     } catch {
       toast.error('An error occurred while deleting the tag!');
