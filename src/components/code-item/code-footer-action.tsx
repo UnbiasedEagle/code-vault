@@ -9,6 +9,12 @@ import { Archive, Edit, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DeleteCodeDialog } from './delete-code-dialog';
 import { useCreateCode } from '@/stores/use-create-code';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../ui/tooltip';
 
 interface CodeUpdateFooterActionProps {
   code: CodeWithTags;
@@ -39,37 +45,62 @@ export const CodeUpdateFooterAction = ({
 
   return (
     <div className='flex items-center gap-4'>
-      <Button
-        onClick={() => {
-          setShowNewCode(false);
-          setShowCompleteCode(null);
-          setSelectedCode(code);
-        }}
-        className='bg-background px-0 hover:bg-background'
-        variant='ghost'
-      >
-        <Edit size={20} className='text-blue-500 p-0 text-base' />
-      </Button>
-      <Button
-        onClick={() => {
-          setShowNewCode(false);
-          setShowCompleteCode(null);
-          setSelectedCode(null);
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={() => {
+                setShowNewCode(false);
+                setShowCompleteCode(null);
+                setSelectedCode(code);
+              }}
+              className='bg-background px-0 hover:bg-background'
+              variant='ghost'
+            >
+              <Edit size={20} className='text-blue-500 p-0 text-base' />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent
+            side='bottom'
+            className='bg-gray-800 text-white p-2 rounded-md shadow-lg'
+          >
+            <p className='text-sm font-medium'>Edit Code</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
-          setPendingDelete(true);
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={() => {
+                setShowNewCode(false);
+                setShowCompleteCode(null);
+                setSelectedCode(null);
 
-          startTransition(() => {
-            handleCodeArchive();
-          });
-        }}
-        className={cn(
-          'bg-background px-0 hover:bg-background',
-          pendingDelete && 'cursor-not-allowed'
-        )}
-        variant='ghost'
-      >
-        <Archive size={20} className='text-primary p-0' />
-      </Button>
+                setPendingDelete(true);
+
+                startTransition(() => {
+                  handleCodeArchive();
+                });
+              }}
+              className={cn(
+                'bg-background px-0 hover:bg-background',
+                pendingDelete && 'cursor-not-allowed'
+              )}
+              variant='ghost'
+            >
+              <Archive size={20} className='text-primary p-0' />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent
+            side='bottom'
+            className='bg-gray-800 text-white p-2 rounded-md shadow-lg'
+          >
+            <p className='text-sm font-medium'>Archive Code</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   );
 };
@@ -99,25 +130,36 @@ export const ArchiveCodeFooterAction = ({
   };
   return (
     <div className='flex items-center gap-4'>
-      <Button
-        onClick={() => {
-          setShowNewCode(false);
-          setShowCompleteCode(null);
-          setSelectedCode(null);
-
-          setPendingRestore(true);
-          startTransition(() => {
-            handleCodeRestore();
-          });
-        }}
-        className={cn(
-          'bg-background px-0 hover:bg-background',
-          pendingRestore && 'cursor-not-allowed'
-        )}
-        variant='ghost'
-      >
-        <RotateCcw size={20} className='text-blue-500 p-0 text-base' />
-      </Button>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={() => {
+                setShowNewCode(false);
+                setShowCompleteCode(null);
+                setSelectedCode(null);
+                setPendingRestore(true);
+                startTransition(() => {
+                  handleCodeRestore();
+                });
+              }}
+              className={cn(
+                'bg-background px-0 hover:bg-background',
+                pendingRestore && 'cursor-not-allowed'
+              )}
+              variant='ghost'
+            >
+              <RotateCcw size={20} className='text-blue-500 p-0 text-base' />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent
+            side='bottom'
+            className='bg-gray-800 text-white p-2 rounded-md shadow-lg'
+          >
+            <p className='text-sm font-medium'>Restore Code</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <DeleteCodeDialog codeId={code.id} />
     </div>
   );

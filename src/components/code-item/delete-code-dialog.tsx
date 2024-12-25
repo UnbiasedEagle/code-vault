@@ -17,6 +17,12 @@ import { FaSpinner } from 'react-icons/fa';
 import { useCreateCode } from '@/stores/use-create-code';
 import { useShowCode } from '@/stores/use-show-code';
 import { useEditCode } from '@/stores/use-edit-code';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../ui/tooltip';
 
 interface DeleteCodeDialogProps {
   codeId: string;
@@ -52,14 +58,27 @@ export const DeleteCodeDialog = ({ codeId }: DeleteCodeDialogProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button
-          className='bg-background px-0 hover:bg-background'
-          variant='ghost'
-        >
-          <Trash size={20} className='text-red-500 p-0' />
-        </Button>
-      </DialogTrigger>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>
+              <Button
+                className='bg-background px-0 hover:bg-background'
+                variant='ghost'
+              >
+                <Trash size={20} className='text-red-500 p-0' />
+              </Button>
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent
+            side='bottom'
+            className='bg-gray-800 text-white p-2 rounded-md shadow-lg'
+          >
+            <p className='text-sm font-medium'>Delete Code</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle className='text-foreground text-base'>
