@@ -41,6 +41,6 @@ export async function createTag(prevState: unknown, formData: FormData) {
 
   return {
     success: true,
-    message: 'Tag created successfully',
+    message: 'Tag created successfully!',
   };
 }

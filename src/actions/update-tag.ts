@@ -17,7 +17,7 @@ export async function updateTag(prevState: unknown, formData: FormData) {
 
   if (!name) {
     return {
-      error: 'Tag name is required',
+      error: 'Tag name is required!',
     };
   }
 
@@ -30,7 +30,7 @@ export async function updateTag(prevState: unknown, formData: FormData) {
 
   if (!isTagExists) {
     return {
-      error: 'Tag not found',
+      error: 'Tag not found!',
     };
   }
 
@@ -50,6 +50,6 @@ export async function updateTag(prevState: unknown, formData: FormData) {
 
   return {
     success: true,
-    message: 'Tag updated successfully',
+    message: 'Tag updated successfully!',
   };
 }

@@ -44,6 +44,6 @@ export async function createCode(prevState: unknown, formData: FormData) {
 
   return {
     success: true,
-    message: 'Code created successfully',
+    message: 'Code created successfully!',
   };
 }

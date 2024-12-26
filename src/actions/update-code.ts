@@ -40,7 +40,7 @@ export async function updateCode(
 
   if (!isCodeExists) {
     return {
-      error: 'Code not found',
+      error: 'Code not found!',
     };
   }
 
@@ -63,7 +63,7 @@ export async function updateCode(
 
   return {
     success: true,
-    message: 'Code updated successfully',
+    message: 'Code updated successfully!',
   };
 }
 
@@ -83,7 +83,7 @@ export async function updateCodeFavorite(prevState: unknown, id: string) {
 
   if (!code) {
     return {
-      error: 'Code not found',
+      error: 'Code not found!',
     };
   }
 
@@ -111,7 +111,7 @@ export async function updateCodeFavorite(prevState: unknown, id: string) {
 
   return {
     success: true,
-    message: code.favorited ? 'Removed from favorites.' : 'Added to favorites!',
+    message: code.favorited ? 'Removed from favorites!' : 'Added to favorites!',
     data: updatedCode,
   };
 }
@@ -132,7 +132,7 @@ export async function markCodeArchived(prevState: unknown, id: string) {
 
   if (!code) {
     return {
-      error: 'Code not found',
+      error: 'Code not found!',
     };
   }
 
@@ -150,7 +150,7 @@ export async function markCodeArchived(prevState: unknown, id: string) {
 
   return {
     success: true,
-    message: 'Code moved to archive',
+    message: 'Code moved to archive!',
   };
 }
 
@@ -170,7 +170,7 @@ export async function restoreArchivedCode(prevState: unknown, id: string) {
 
   if (!code) {
     return {
-      error: 'Code not found',
+      error: 'Code not found!',
     };
   }
 
@@ -187,6 +187,6 @@ export async function restoreArchivedCode(prevState: unknown, id: string) {
 
   return {
     success: true,
-    message: 'Code restored from archive',
+    message: 'Code restored from archive!',
   };
 }
