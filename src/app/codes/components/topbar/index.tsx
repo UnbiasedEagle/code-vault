@@ -1,6 +1,6 @@
 'use client';
 
-import { Languages } from '@/components/layout/sidebar/languages';
+import { LanguagesSection } from '@/components/layout/sidebar/languages';
 import { QuickLinks } from '@/components/layout/sidebar/quick-links';
 import { Logo } from '@/components/logo';
 import { SignOutBtn } from '@/components/signout-btn';
@@ -68,7 +68,7 @@ export const TopBar = ({ imageUrl, fullName, email, tags }: TopBarProps) => {
                     <Logo />
                     <div className='flex-1 flex flex-col gap-6 p-6 overflow-y-auto'>
                       <QuickLinks tags={tags} />
-                      <Languages />
+                      <LanguagesSection />
                     </div>
                     <div className='p-4 border-t border-border bg-card/50'>
                       <SignOutBtn />

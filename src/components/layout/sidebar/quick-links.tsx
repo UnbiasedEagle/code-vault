@@ -68,7 +68,7 @@ export const QuickLinks = ({ tags }: QuickLinksProps) => {
                       router.push(`/codes?${currentParams.toString()}`);
                     }}
                     className={cn(
-                      'w-full flex justify-start items-center gap-3 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent/50 hover:text-accent-foreground transition-all',
+                      'w-full flex justify-start items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent/50 hover:text-accent-foreground transition-all',
                       activeFilterQuery === item.query &&
                         'bg-accent/50 text-accent-foreground shadow-sm'
                     )}
