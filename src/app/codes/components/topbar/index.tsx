@@ -1,6 +1,6 @@
 'use client';
 
-import { LanguagesSection } from '@/components/layout/sidebar/languages';
+import { LanguagesSection } from '@/components/layout/sidebar/languages-section';
 import { QuickLinks } from '@/components/layout/sidebar/quick-links';
 import { Logo } from '@/components/logo';
 import { SignOutBtn } from '@/components/signout-btn';
@@ -26,9 +26,20 @@ interface TopBarProps {
   fullName: string;
   email: string;
   tags: SimpleTag[];
+  languageCounts: {
+    name: string;
+    count: number;
+    icon: JSX.Element;
+  }[];
 }
 
-export const TopBar = ({ imageUrl, fullName, email, tags }: TopBarProps) => {
+export const TopBar = ({
+  imageUrl,
+  fullName,
+  email,
+  tags,
+  languageCounts,
+}: TopBarProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
@@ -68,7 +79,7 @@ export const TopBar = ({ imageUrl, fullName, email, tags }: TopBarProps) => {
                     <Logo />
                     <div className='flex-1 flex flex-col gap-6 p-6 overflow-y-auto'>
                       <QuickLinks tags={tags} />
-                      <LanguagesSection />
+                      <LanguagesSection languageCounts={languageCounts} />
                     </div>
                     <div className='p-4 border-t border-border bg-card/50'>
                       <SignOutBtn />

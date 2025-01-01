@@ -5,6 +5,7 @@ import { TopBar } from './components/topbar';
 import prisma from '@/lib/db';
 import { CodeFilter } from '@/types';
 import { Prisma } from '@prisma/client';
+import { Languages } from '@/lib/utils';
 
 interface CodePageProps {
   searchParams: Promise<{
@@ -81,6 +82,24 @@ const CodesPage = async ({ searchParams }: CodePageProps) => {
     },
   });
 
+  const codesByLanguage = await prisma.code.groupBy({
+    by: ['language'],
+    _count: {
+      language: true,
+    },
+  });
+
+  const languageCounts = codesByLanguage.map((language) => {
+    const foundLanguage = Languages.find(
+      (lang) => lang.label === language.language
+    )!;
+    return {
+      icon: <foundLanguage.icon className='text-lg opacity-75' />,
+      name: foundLanguage.name,
+      count: language._count.language,
+    };
+  });
+
   return (
     <div className='h-full scrollbar-hide overflow-auto flex flex-col gap-5'>
       <TopBar
@@ -88,6 +107,7 @@ const CodesPage = async ({ searchParams }: CodePageProps) => {
         imageUrl={user.imageUrl}
         fullName={user.firstName + ' ' + user.lastName}
         email={user.emailAddresses[0].emailAddress}
+        languageCounts={languageCounts}
       />
       <ContentArea filter={filter} codeItems={codes} tags={tags} />
     </div>
