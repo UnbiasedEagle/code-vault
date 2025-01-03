@@ -42,6 +42,7 @@ export const Sidebar = async () => {
       icon: <foundLanguage.icon className='text-lg opacity-75' />,
       name: foundLanguage.name,
       count: language._count.language,
+      label: foundLanguage.label,
     };
   });
 

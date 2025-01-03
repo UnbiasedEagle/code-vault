@@ -11,6 +11,7 @@ interface CodePageProps {
   searchParams: Promise<{
     filter: string;
     tag: string;
+    language: string;
   }>;
 }
 
@@ -20,6 +21,7 @@ const CodesPage = async ({ searchParams }: CodePageProps) => {
 
   let filter: CodeFilter = 'all';
   let tagId: undefined | string;
+  let language: undefined | string;
 
   if (params.filter) {
     filter = params.filter as CodeFilter;
@@ -27,6 +29,10 @@ const CodesPage = async ({ searchParams }: CodePageProps) => {
 
   if (params.tag) {
     tagId = params.tag;
+  }
+
+  if (params.language) {
+    language = params.language;
   }
 
   if (!user) {
@@ -57,6 +63,10 @@ const CodesPage = async ({ searchParams }: CodePageProps) => {
 
   if (filter === 'archived') {
     query.archived = true;
+  }
+
+  if (language) {
+    query.language = language;
   }
 
   if (tagId) {
@@ -97,6 +107,7 @@ const CodesPage = async ({ searchParams }: CodePageProps) => {
       icon: <foundLanguage.icon className='text-lg opacity-75' />,
       name: foundLanguage.name,
       count: language._count.language,
+      label: foundLanguage.label,
     };
   });
 

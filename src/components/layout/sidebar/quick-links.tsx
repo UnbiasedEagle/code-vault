@@ -61,11 +61,7 @@ export const QuickLinks = ({ tags }: QuickLinksProps) => {
                   <Button
                     variant='ghost'
                     onClick={() => {
-                      const currentParams = new URLSearchParams(
-                        window.location.search
-                      );
-                      currentParams.set('filter', item.query);
-                      router.push(`/codes?${currentParams.toString()}`);
+                      router.push(`/codes?filter=${item.query}`);
                     }}
                     className={cn(
                       'w-full flex justify-start items-center gap-2 px-4 py-2 text-sm font-medium rounded-md hover:bg-accent/50 hover:text-accent-foreground transition-all',
