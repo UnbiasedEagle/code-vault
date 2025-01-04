@@ -1,8 +1,9 @@
 import Navbar from '@/components/layout/navbar';
+import Image from 'next/image';
 
 const HomePage = () => {
   return (
-    <div className='container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10 sm:gap-20'>
+    <div className='container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-20 sm:gap-10'>
       <Navbar />
       <div className='flex text-center flex-col gap-6 items-center justify-center'>
         <h1 className='font-bold text-3xl'>
@@ -14,7 +15,13 @@ const HomePage = () => {
           the snippets you need, right when you need it. Spend less time
           searching for code and more time writing it.
         </p>
-        {/* TODO: Add App Image */}
+        <Image
+          className='border rounded-lg'
+          src='/app.png'
+          width={800}
+          height={500}
+          alt='App'
+        />
       </div>
     </div>
   );

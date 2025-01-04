@@ -15,7 +15,6 @@ import {
 import { ThemeSwitch } from '@/components/ui/theme-switch';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { Menu } from 'lucide-react';
-import { useState } from 'react';
 import { CreateCodeButton } from './create-code-button';
 import { SearchBar } from './search-bar';
 import { UserProfile } from './user-profile';
@@ -27,6 +26,7 @@ interface TopBarProps {
   email: string;
   tags: SimpleTag[];
   languageCounts: {
+    label: string;
     name: string;
     count: number;
     icon: JSX.Element;
@@ -40,8 +40,6 @@ export const TopBar = ({
   tags,
   languageCounts,
 }: TopBarProps) => {
-  const [searchQuery, setSearchQuery] = useState('');
-
   return (
     <Card>
       <CardContent className='p-4'>
@@ -54,7 +52,7 @@ export const TopBar = ({
             />
           </div>
           <div className='flex items-center gap-2.5 flex-1 max-w-4xl'>
-            <SearchBar value={searchQuery} onChange={setSearchQuery} />
+            <SearchBar />
             <CreateCodeButton />
           </div>
           <div className='flex items-center gap-2'>
