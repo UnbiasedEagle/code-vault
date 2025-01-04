@@ -18,6 +18,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { CreateTagSchema } from '@/schemas/create-tag';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
@@ -63,10 +69,25 @@ export const CreateTagBtn = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <Button onClick={() => setOpen(true)} className='flex items-center gap-1'>
-        <Plus className='h-5 w-5' />
-        Tag
-      </Button>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={() => setOpen(true)}
+              className='flex items-center gap-1'
+            >
+              <Plus className='h-5 w-5' />
+              Tag
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent
+            side='bottom'
+            className='bg-gray-800 text-white p-2 rounded-md shadow-lg'
+          >
+            <p className='text-sm font-medium'>Create Tag</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <DialogContent className='w-[90%] mx-auto rounded-lg'>
         <DialogHeader>
           <DialogTitle>Create New Tag</DialogTitle>
