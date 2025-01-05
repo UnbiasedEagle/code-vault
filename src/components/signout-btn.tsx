@@ -11,7 +11,7 @@ export const SignOutBtn = () => {
       variant='ghost'
       className='w-full cursor-pointer justify-start text-muted-foreground hover:text-foreground'
     >
-      <SignOutButton>
+      <SignOutButton redirectUrl='/'>
         <div className='flex items-center gap-3'>
           <LogOut size={16} />
           Sign out
