@@ -43,7 +43,7 @@ export const TopBar = ({ imageUrl, fullName, email }: TopBarProps) => {
           </div>
           <div className='flex items-center gap-2'>
             <ThemeSwitch />
-            <div className='md:hidden'>
+            <div className='lg:hidden'>
               <Sheet>
                 <VisuallyHidden.Root>
                   <SheetTitle>Menu</SheetTitle>
