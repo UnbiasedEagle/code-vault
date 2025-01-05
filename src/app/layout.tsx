@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider afterSignOutUrl='/'>
+    <ClerkProvider>
       <html suppressHydrationWarning lang='en'>
         <body className={`${poppins.className} antialiased`}>
           <ThemeProvider
