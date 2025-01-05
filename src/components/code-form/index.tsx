@@ -3,17 +3,15 @@
 import { Card, CardContent } from '../ui/card';
 import { Form } from '../ui/form';
 import { Button } from '../ui/button';
-import { SimpleTag } from '@/types';
+
 import { FormHeader } from './form-header';
 import { FormFields } from './form-fields';
 import { useCodeForm } from '../../hooks/use-code-form';
 import { FaSpinner } from 'react-icons/fa';
+import { useTags } from '@/stores/use-tags';
 
-interface CodeFormProps {
-  tags: SimpleTag[];
-}
-
-export const CodeForm = ({ tags }: CodeFormProps) => {
+export const CodeForm = () => {
+  const { tags } = useTags();
   const { form, formKey, pending, isEditing, onSubmit, onClose } =
     useCodeForm();
 

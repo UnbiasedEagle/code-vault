@@ -1,3 +1,5 @@
+'use client';
+
 import { Languages } from '@/lib/utils';
 import { CodeFilter, CodeWithTags } from '@/types';
 import { IconType } from 'react-icons/lib';

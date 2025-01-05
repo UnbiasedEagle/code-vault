@@ -1,21 +1,28 @@
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
-import { SimpleTag } from '@/types';
+
 import { CreateTagBtn } from './create-tag-btn';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { TagSwiperItem } from './tag-swiper-item';
+import prisma from '@/lib/db';
+import { TagSwiperList } from './tag-swiper-list';
 
-interface TagsSwiperProps {
-  tags: SimpleTag[];
-}
-
-export const TagsSwiper = ({ tags }: TagsSwiperProps) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+export const TagsSwiper = async ({ userId }: { userId: string }) => {
+  const tags = await prisma.tag.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      id: true,
+      name: true,
+    },
+    orderBy: {
+      updatedAt: 'desc',
+    },
+  });
 
   return (
     <Card>
@@ -37,39 +44,9 @@ export const TagsSwiper = ({ tags }: TagsSwiperProps) => {
             >
               <CarouselContent className='flex text-neutral-400 font-medium'>
                 <CarouselItem>
-                  <Button
-                    variant={searchParams.get('tag') ? 'secondary' : 'default'}
-                    onClick={() => {
-                      const currentParams = new URLSearchParams(
-                        window.location.search
-                      );
-                      currentParams.delete('tag');
-                      router.push(`/codes?${currentParams.toString()}`);
-                    }}
-                  >
-                    All
-                  </Button>
+                  <TagSwiperItem />
                 </CarouselItem>
-                {tags.map((tag) => (
-                  <CarouselItem key={tag.id}>
-                    <Button
-                      onClick={() => {
-                        const currentParams = new URLSearchParams(
-                          window.location.search
-                        );
-                        currentParams.set('tag', tag.id);
-                        router.push(`/codes?${currentParams.toString()}`);
-                      }}
-                      variant={
-                        searchParams.get('tag') === tag.id
-                          ? 'default'
-                          : 'secondary'
-                      }
-                    >
-                      {tag.name}
-                    </Button>
-                  </CarouselItem>
-                ))}
+                <TagSwiperList tags={tags} />
               </CarouselContent>
             </Carousel>
           </div>

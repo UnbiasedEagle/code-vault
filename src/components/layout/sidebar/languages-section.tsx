@@ -1,19 +1,26 @@
-'use client';
+import prisma from '@/lib/db';
+import { Languages } from '@/lib/utils';
+import { LanguageSectionItem } from './language-section-item';
 
-import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
+export const LanguagesSection = async () => {
+  const codesByLanguage = await prisma.code.groupBy({
+    by: ['language'],
+    _count: {
+      language: true,
+    },
+  });
 
-interface LanguagesSectionProps {
-  languageCounts: {
-    label: string;
-    name: string;
-    count: number;
-    icon: JSX.Element;
-  }[];
-}
-
-export const LanguagesSection = ({ languageCounts }: LanguagesSectionProps) => {
-  const router = useRouter();
+  const languageCounts = codesByLanguage.map((language) => {
+    const foundLanguage = Languages.find(
+      (lang) => lang.label === language.language
+    )!;
+    return {
+      icon: <foundLanguage.icon className='text-lg opacity-75' />,
+      name: foundLanguage.name,
+      count: language._count.language,
+      label: foundLanguage.label,
+    };
+  });
 
   return (
     <div className='space-y-3'>
@@ -22,27 +29,7 @@ export const LanguagesSection = ({ languageCounts }: LanguagesSectionProps) => {
       </span>
       <ul className='flex flex-col space-y-1'>
         {languageCounts.map((language) => (
-          <Button
-            asChild
-            onClick={() => {
-              const currentParams = new URLSearchParams(window.location.search);
-              currentParams.set('language', language.label);
-              router.push(`/codes?${currentParams.toString()}`);
-            }}
-            variant='ghost'
-            key={language.name}
-            className='group flex items-center justify-between px-4 py-2 text-sm font-medium rounded-md hover:bg-accent/50 hover:text-accent-foreground transition-all cursor-pointer'
-          >
-            <div>
-              <div className='flex items-center gap-2'>
-                {language.icon}
-                <span>{language.name}</span>
-              </div>
-              <div className='flex items-center justify-center h-5 min-w-[20px] px-2 text-xs font-semibold bg-primary/10 text-primary rounded-full'>
-                {language.count}
-              </div>
-            </div>
-          </Button>
+          <LanguageSectionItem key={language.label} language={language} />
         ))}
       </ul>
     </div>

@@ -1,13 +1,13 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useTags } from '@/stores/use-tags';
+import { Archive, Heart } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { AiFillSnippets } from 'react-icons/ai';
 import { IoMdPricetags } from 'react-icons/io';
 import { TagsDialog } from './tags-dialog';
-import { SimpleTag } from '@/types';
-import { Archive, Heart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 const links = [
   {
@@ -31,11 +31,8 @@ const links = [
   },
 ];
 
-interface QuickLinksProps {
-  tags: SimpleTag[];
-}
-
-export const QuickLinks = ({ tags }: QuickLinksProps) => {
+export const QuickLinks = () => {
+  const { tags } = useTags();
   const router = useRouter();
   const searchParams = useSearchParams();
 

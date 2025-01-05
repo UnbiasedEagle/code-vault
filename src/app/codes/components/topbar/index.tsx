@@ -1,5 +1,3 @@
-'use client';
-
 import { LanguagesSection } from '@/components/layout/sidebar/languages-section';
 import { QuickLinks } from '@/components/layout/sidebar/quick-links';
 import { Logo } from '@/components/logo';
@@ -18,28 +16,14 @@ import { Menu } from 'lucide-react';
 import { CreateCodeButton } from './create-code-button';
 import { SearchBar } from './search-bar';
 import { UserProfile } from './user-profile';
-import { SimpleTag } from '@/types';
 
 interface TopBarProps {
   imageUrl: string;
   fullName: string;
   email: string;
-  tags: SimpleTag[];
-  languageCounts: {
-    label: string;
-    name: string;
-    count: number;
-    icon: JSX.Element;
-  }[];
 }
 
-export const TopBar = ({
-  imageUrl,
-  fullName,
-  email,
-  tags,
-  languageCounts,
-}: TopBarProps) => {
+export const TopBar = ({ imageUrl, fullName, email }: TopBarProps) => {
   return (
     <Card>
       <CardContent className='p-4'>
@@ -76,8 +60,8 @@ export const TopBar = ({
                   <div className='flex flex-col h-full'>
                     <Logo />
                     <div className='flex-1 flex flex-col gap-6 p-6 overflow-y-auto'>
-                      <QuickLinks tags={tags} />
-                      <LanguagesSection languageCounts={languageCounts} />
+                      <QuickLinks />
+                      <LanguagesSection />
                     </div>
                     <div className='p-4 border-t border-border bg-card/50'>
                       <SignOutBtn />

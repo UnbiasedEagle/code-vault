@@ -1,12 +1,18 @@
-import { CodeFilter, CodeWithTags } from '@/types';
-import { CodeItem } from './code-item';
+'use client';
+
 import { CreateCodeButton } from '@/app/codes/components/topbar/create-code-button';
+import { cn } from '@/lib/utils';
+import { CodeItem } from './code-item';
+import { CodeFilter, CodeWithTags } from '@/types';
 import { Archive } from 'lucide-react';
 import { FaHeart } from 'react-icons/fa';
+import { useShowCode } from '@/stores/use-show-code';
+import { useEditCode } from '@/stores/use-edit-code';
+import { useCreateCode } from '@/stores/use-create-code';
 
 interface CodeListProps {
   codeItems: CodeWithTags[];
-  showCode?: boolean;
+  showCode: boolean;
   filter: CodeFilter;
 }
 
@@ -41,26 +47,25 @@ const getEmptyMessage = (filter: CodeFilter) => {
   }
 };
 
-export const CodeList = ({
-  showCode = true,
-  codeItems,
-  filter,
-}: CodeListProps) => {
+export const CodeList = ({ codeItems, showCode, filter }: CodeListProps) => {
+  const completeCode = useShowCode();
+  const editCode = useEditCode();
+  const createCode = useCreateCode();
+
   const { title, description } = getEmptyMessage(filter);
   return (
-    <>
+    <div
+      className={cn(
+        'flex flex-col gap-5',
+        createCode.showNewCode ||
+          editCode.selectedCode ||
+          completeCode.selectedCode
+          ? 'w-full md:w-1/2'
+          : 'w-full'
+      )}
+    >
       {codeItems.length === 0 ? (
-        <div className='flex flex-col items-center justify-center p-12 text-center border-2 border-dashed rounded-lg bg-gray-50 dark:bg-gray-50/5 space-y-3'>
-          <div className='space-y-1'>
-            <p className='text-lg font-medium text-gray-600 dark:text-gray-300'>
-              {title}
-            </p>
-          </div>
-          <p className='text-sm text-gray-500 dark:text-gray-400'>
-            {description}
-          </p>
-          {filter === 'all' && <CreateCodeButton />}
-        </div>
+        <EmptyState title={title} description={description} filter={filter} />
       ) : (
         <ul className='grid grid-cols-[repeat(auto-fill,_minmax(320px,_1fr))] gap-4'>
           {codeItems.map((codeItem) => (
@@ -74,6 +79,26 @@ export const CodeList = ({
           ))}
         </ul>
       )}
-    </>
+    </div>
+  );
+};
+
+interface EmptyStateProps {
+  title: string | JSX.Element;
+  description: string;
+  filter: string;
+}
+
+export const EmptyState = ({ title, description, filter }: EmptyStateProps) => {
+  return (
+    <div className='flex flex-col items-center justify-center p-12 text-center border-2 border-dashed rounded-lg bg-gray-50 dark:bg-gray-50/5 space-y-3'>
+      <div className='space-y-1'>
+        <p className='text-lg font-medium text-gray-600 dark:text-gray-300'>
+          {title}
+        </p>
+      </div>
+      <p className='text-sm text-gray-500 dark:text-gray-400'>{description}</p>
+      {filter === 'all' && <CreateCodeButton />}
+    </div>
   );
 };
