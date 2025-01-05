@@ -22,6 +22,8 @@ export const LanguagesSection = async () => {
     };
   });
 
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
   return (
     <div className='space-y-3'>
       <span className='text-xs font-semibold text-muted-foreground px-2 uppercase tracking-wider'>

@@ -16,6 +16,8 @@ import { Menu } from 'lucide-react';
 import { CreateCodeButton } from './create-code-button';
 import { SearchBar } from './search-bar';
 import { UserProfile } from './user-profile';
+import { Suspense } from 'react';
+import { LoadingLanguagesSection } from '@/components/layout/sidebar/loading-languages-section';
 
 interface TopBarProps {
   imageUrl: string;
@@ -61,7 +63,9 @@ export const TopBar = ({ imageUrl, fullName, email }: TopBarProps) => {
                     <Logo />
                     <div className='flex-1 flex flex-col gap-6 p-6 overflow-y-auto'>
                       <QuickLinks />
-                      <LanguagesSection />
+                      <Suspense fallback={<LoadingLanguagesSection />}>
+                        <LanguagesSection />
+                      </Suspense>
                     </div>
                     <div className='p-4 border-t border-border bg-card/50'>
                       <SignOutBtn />
